@@ -389,5 +389,18 @@ MIT License - Detaylar için `LICENSE` dosyasına bakın.
 
 ---
 
+## 👤 Geliştirici
+
+**Alican Kıraz**
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/alican-kiraz/)
+[![Twitter](https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/AlicanKiraz0)
+[![HuggingFace](https://img.shields.io/badge/HuggingFace-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black)](https://huggingface.co/AlicanKiraz0)
+[![Medium](https://img.shields.io/badge/Medium-12100E?style=for-the-badge&logo=medium&logoColor=white)](https://medium.com/@alican-kiraz1)
+
+**GitHub:** [@alicankiraz1](https://github.com/alicankiraz1)
+
+---
+
 **Not:** Bu benchmark Türkçe dilinin karmaşıklıklarını test eder. Sonuçlar modellerin genel Türkçe yeteneklerini yansıtır.
 
