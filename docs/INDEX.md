@@ -73,16 +73,16 @@ USAGE_GUIDE.md → "Sorun Giderme" bölümü
 
 ```bash
 # Dokümantasyonu okuma
-cat README.md          # Genel bakış
-cat QUICK_START.md     # Hızlı başlangıç
-cat USAGE_GUIDE.md     # Detaylı kullanım
-cat CONTRIBUTING.md    # Katkı rehberi
+cat README.md               # Genel bakış
+cat docs/QUICK_START.md     # Hızlı başlangıç
+cat docs/USAGE_GUIDE.md     # Detaylı kullanım
+cat docs/CONTRIBUTING.md    # Katkı rehberi
 
 # İlk test
-python3 run_claude_comparison.py
+python3 examples/run_claude_comparison.py
 
 # Model kayıtları
-python3 model_registry.py
+python3 tools/model_registry.py
 
 # Yardım
 python3 benchmark.py --help
@@ -104,35 +104,54 @@ python3 benchmark.py --help
 
 ```
 Turkish-Benchmark/
-├── README.md              # 📖 ANA DOKÜMANTASYON
-├── QUICK_START.md         # 🚀 HIZLI BAŞLANGIÇ
-├── USAGE_GUIDE.md         # 📚 DETAYLI KILAVUZ
-├── CONTRIBUTING.md        # 🤝 KATKI REHBERİ
-├── INDEX.md               # 📑 Bu dosya
+├── README.md                    # 📖 ANA DOKÜMANTASYON
+├── benchmark.py                 # Ana test scripti
+├── config.example.yaml          # Konfigürasyon şablonu
+├── requirements.txt             # Bağımlılıklar
+├── LICENSE                      # MIT License
 │
-├── benchmark.py           # Ana test scripti
-├── run_claude_comparison.py   # Claude test
-├── run_gpt5_comparison.py     # GPT-5 test
-├── compare_results.py     # Sonuç karşılaştırma
-├── model_registry.py      # Model kayıtları
-├── analyze_saq.py         # SAQ analiz
-├── rescore.py             # Yeniden puanlama
-├── full_analysis.py       # Genel özet
+├── docs/                        # 📚 Dokümantasyon
+│   ├── QUICK_START.md           # 🚀 Hızlı başlangıç
+│   ├── USAGE_GUIDE.md           # 📖 Detaylı kullanım
+│   ├── CONTRIBUTING.md          # 🤝 Katkı rehberi
+│   ├── MODELS.md                # 🤖 Model listesi
+│   └── INDEX.md                 # 📑 Bu dosya
 │
-├── config.yaml            # Konfigürasyon
-├── requirements.txt       # Bağımlılıklar
-└── ... (16 Python scripti toplam)
+├── src/                         # 💻 Kaynak kodlar
+│   ├── evaluator.py             # Test yürütücü
+│   ├── judge.py                 # Puanlama sistemi
+│   ├── reporter.py              # Rapor oluşturucu
+│   ├── models/                  # Model wrapper'ları
+│   └── utils/                   # Yardımcı modüller
+│
+├── data/                        # 📊 Test verileri
+│   ├── MCQ-Türkçe Benchmark.json  # 131 MCQ
+│   └── SAQ-Türkçe-Benchmark.json  # 422 SAQ
+│
+├── examples/                    # 📋 Örnek scriptler
+│   ├── run_claude_comparison.py
+│   ├── run_gpt5_comparison.py
+│   └── run_comparison_test.py
+│
+├── tools/                       # 🔧 Yardımcı araçlar
+│   ├── model_registry.py
+│   ├── compare_results.py
+│   ├── analyze_saq.py
+│   └── rescore.py
+│
+├── results/                     # Test sonuçları (git'te yok)
+└── logs/                        # Log dosyaları (git'te yok)
 ```
 
 ---
 
 **Hemen başlayın**:
 ```bash
-cat QUICK_START.md
+cat docs/QUICK_START.md
 ```
 
 Veya:
 ```bash
-python3 run_claude_comparison.py
+python3 examples/run_claude_comparison.py
 ```
 

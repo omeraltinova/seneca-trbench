@@ -210,15 +210,15 @@ python3 run_claude_comparison.py
 ### Test 1: Hızlı Karşılaştırma (ÖNERİLEN İLK ADIM)
 
 ```bash
-python3 run_claude_comparison.py
+python3 examples/run_claude_comparison.py
 ```
 
 **Sonuç**: Hangi model en iyi performansı veriyor?
 
-### Test 2: GPT-5-main-mini Tam MCQ
+### Test 2: GPT-5-mini Tam MCQ
 
 ```bash
-python3 benchmark.py --provider openai --model gpt-5-main-mini --test-type mcq
+python3 benchmark.py --provider openai --model gpt-5-mini --test-type mcq
 ```
 
 **Beklenen**: ~90% (GPT-3.5'ten +10%)
@@ -234,7 +234,7 @@ python3 benchmark.py --provider anthropic --model claude-sonnet-4-5-20250929 --t
 ### Test 4: Model Kayıtlarını Gör
 
 ```bash
-python3 model_registry.py
+python3 tools/model_registry.py
 ```
 
 **Gösterir**: Tüm test edilmiş modeller ve leaderboard
@@ -266,16 +266,16 @@ python3 model_registry.py
 
 ## 📖 Daha Fazla Bilgi
 
-- Detaylı kullanım: `USAGE_GUIDE.md`
-- Hızlı başlangıç: `QUICK_START.md`
-- Ana dokümantasyon: `README.md`
+- Detaylı kullanım: [USAGE_GUIDE.md](USAGE_GUIDE.md)
+- Hızlı başlangıç: [QUICK_START.md](QUICK_START.md)
+- Ana dokümantasyon: [../README.md](../README.md)
 
 ---
 
 **Hemen test edin**:
 ```bash
-python3 run_claude_comparison.py
+python3 examples/run_claude_comparison.py
 ```
 
-Güncel model isimleriyle artık çalışacak! 🚀
+Güncel model isimleriyle artık çalışacak!
 

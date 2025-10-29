@@ -289,64 +289,93 @@ python3 benchmark.py --provider openai --model gpt-4 --test-type saq
 
 ```
 Turkish-Benchmark/
-├── benchmark.py              # Ana script
-├── config.yaml              # Konfigürasyon
-├── requirements.txt         # Bağımlılıklar
-├── README.md               # Dokümantasyon
-├── models/                 # Model wrapper'ları
+├── benchmark.py                 # Ana script
+├── config.example.yaml          # Konfigürasyon şablonu
+├── requirements.txt             # Bağımlılıklar
+├── README.md                    # Ana dokümantasyon
+├── LICENSE                      # MIT License
+│
+├── src/                         # Kaynak kodlar
 │   ├── __init__.py
-│   ├── base_model.py      # Base sınıf
-│   ├── api_models.py      # API modelleri
-│   └── local_models.py    # Lokal modeller
-├── utils/                  # Yardımcı modüller
-│   ├── __init__.py
-│   ├── config_loader.py   # Config yükleyici
-│   └── logger.py          # Logger
-├── evaluator.py           # Test yürütücü
-├── judge.py              # Puanlama sistemi
-├── reporter.py           # Rapor oluşturucu
-├── results/              # Test sonuçları
-│   └── intermediate/     # Ara sonuçlar
-└── logs/                # Log dosyaları
+│   ├── evaluator.py             # Test yürütücü
+│   ├── judge.py                 # Puanlama sistemi
+│   ├── reporter.py              # Rapor oluşturucu
+│   ├── models/                  # Model wrapper'ları
+│   │   ├── base_model.py        # Base sınıf
+│   │   ├── api_models.py        # API modelleri (OpenAI, Claude, Gemini, Together)
+│   │   └── local_models.py      # Lokal modeller (HuggingFace/Transformers)
+│   └── utils/                   # Yardımcı modüller
+│       ├── config_loader.py     # Config yükleyici
+│       └── logger.py            # Logger
+│
+├── data/                        # Test verileri
+│   ├── MCQ-Türkçe Benchmark.json  # 131 MCQ sorusu
+│   └── SAQ-Türkçe-Benchmark.json  # 422 SAQ sorusu
+│
+├── docs/                        # Dokümantasyon
+│   ├── QUICK_START.md           # Hızlı başlangıç
+│   ├── USAGE_GUIDE.md           # Detaylı kullanım
+│   ├── CONTRIBUTING.md          # Katkı rehberi
+│   ├── MODELS.md                # Model listesi
+│   └── ...
+│
+├── examples/                    # Örnek scriptler
+│   ├── run_claude_comparison.py # Claude karşılaştırma
+│   ├── run_gpt5_comparison.py   # GPT-5 karşılaştırma
+│   └── run_comparison_test.py   # Genel karşılaştırma
+│
+├── tools/                       # Yardımcı araçlar
+│   ├── model_registry.py        # Model kayıtları
+│   ├── rescore.py               # Yeniden puanlama
+│   ├── compare_results.py       # Sonuç karşılaştırma
+│   ├── analyze_saq.py           # SAQ analiz
+│   └── full_analysis.py         # Genel analiz
+│
+├── results/                     # Test sonuçları (gitignore'da)
+│   └── intermediate/            # Ara sonuçlar
+│
+└── logs/                        # Log dosyaları (gitignore'da)
 ```
 
 ## 📚 Dokümantasyon
 
-- **📖 USAGE_GUIDE.md** - Detaylı kullanım kılavuzu (model seçimi, sorun giderme, örnekler)
-- **🚀 QUICK_START.md** - Hızlı başlangıç rehberi
-- **🤝 CONTRIBUTING.md** - Katkıda bulunma rehberi
+- **📖 [USAGE_GUIDE.md](docs/USAGE_GUIDE.md)** - Detaylı kullanım kılavuzu (model seçimi, sorun giderme, örnekler)
+- **🚀 [QUICK_START.md](docs/QUICK_START.md)** - Hızlı başlangıç rehberi
+- **🤝 [CONTRIBUTING.md](docs/CONTRIBUTING.md)** - Katkıda bulunma rehberi
+- **🤖 [MODELS.md](docs/MODELS.md)** - Tüm desteklenen modeller
 - **📋 README.md** - Bu dosya (genel bakış)
 
 ## 🛠️ Temel Araçlar
 
 | Araç | Kullanım | Süre |
 |------|----------|------|
-| `benchmark.py` | Ana test | 10-60 dk |
-| `run_claude_comparison.py` | Claude karşılaştırma | 25 dk |
-| `run_gpt5_comparison.py` | GPT-5 karşılaştırma | 20 dk |
-| `compare_results.py` | Sonuç analizi | Hızlı |
-| `model_registry.py` | Model kayıtları | Hızlı |
-| `analyze_saq.py` | SAQ detaylı analiz | Hızlı |
-| `rescore.py` | Yeniden puanlama | 2-5 dk |
+| `benchmark.py` | Ana test scripti | 10-60 dk |
+| `examples/run_claude_comparison.py` | Claude karşılaştırma | 25 dk |
+| `examples/run_gpt5_comparison.py` | GPT-5 karşılaştırma | 20 dk |
+| `tools/compare_results.py` | Sonuç karşılaştırma | Hızlı |
+| `tools/model_registry.py` | Model kayıtları | Hızlı |
+| `tools/analyze_saq.py` | SAQ detaylı analiz | Hızlı |
+| `tools/rescore.py` | Yeniden puanlama | 2-5 dk |
+| `tools/full_analysis.py` | Genel analiz | Hızlı |
 
 ## 🎯 İlk Adımınız
 
 ```bash
 # Hızlı model karşılaştırma (ÖNERİLEN)
-python3 run_claude_comparison.py
+python3 examples/run_claude_comparison.py
 
 # Model kayıtlarını görüntüle
-python3 model_registry.py
+python3 tools/model_registry.py
 
 # Detaylı kılavuz
-cat USAGE_GUIDE.md
+cat docs/USAGE_GUIDE.md
 ```
 
 ## 🤝 Katkıda Bulunma
 
 Bu proje açık kaynaklıdır. Katkılarınızı bekliyoruz!
 
-Detaylar için: `CONTRIBUTING.md`
+Detaylar için: [CONTRIBUTING.md](docs/CONTRIBUTING.md)
 
 ## 📝 Lisans
 

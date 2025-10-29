@@ -21,7 +21,7 @@ export TOGETHER_API_KEY="tgp_v1_..."
 
 ```bash
 # Karşılaştırmalı test (10 soru, 4 model)
-python3 run_claude_comparison.py
+python3 examples/run_claude_comparison.py
 
 # Veya tek model
 python3 benchmark.py --provider openai --model gpt-5-mini --test-type mcq
@@ -87,32 +87,32 @@ python3 benchmark.py --provider openai --model gpt-5-main-mini --test-type all
 
 ```bash
 # Claude modelleri (5 model, 10 soru, ~25 dk)
-python3 run_claude_comparison.py
+python3 examples/run_claude_comparison.py
 
 # GPT-5 modelleri (4 model, 10 soru, ~20 dk)
-python3 run_gpt5_comparison.py
+python3 examples/run_gpt5_comparison.py
 
 # Genel (3 model, 10 soru, ~15 dk)
-python3 run_comparison_test.py
+python3 examples/run_comparison_test.py
 ```
 
 ### Analiz Araçları
 
 ```bash
 # Model kayıtları ve leaderboard
-python3 model_registry.py
+python3 tools/model_registry.py
 
 # Tüm sonuçlar özeti
-python3 full_analysis.py
+python3 tools/full_analysis.py
 
 # MCQ karşılaştırma
-python3 compare_results.py --type mcq
+python3 tools/compare_results.py --type mcq
 
 # SAQ detaylı analiz
-python3 analyze_saq.py
+python3 tools/analyze_saq.py
 
 # Sadece puanlama (test hatası durumunda)
-python3 rescore.py --type mcq
+python3 tools/rescore.py --type mcq
 ```
 
 ---
@@ -206,33 +206,33 @@ judge:
 
 ```bash
 # 1. Hızlı karşılaştırma (hangi model iyi?)
-python3 run_claude_comparison.py
+python3 examples/run_claude_comparison.py
 
 # 2. Model kayıtlarını gör
-python3 model_registry.py
+python3 tools/model_registry.py
 
 # 3. En iyi modelle tam MCQ
 python3 benchmark.py --provider <provider> --model <kazanan-model> --test-type mcq
 
 # 4. Sonuçları karşılaştır
-python3 compare_results.py --type mcq
+python3 tools/compare_results.py --type mcq
 ```
 
 ### İleri Kullanıcı İçin
 
 ```bash
 # 1. Hem GPT hem Claude karşılaştır
-python3 run_gpt5_comparison.py
-python3 run_claude_comparison.py
+python3 examples/run_gpt5_comparison.py
+python3 examples/run_claude_comparison.py
 
 # 2. En iyi 2 modelle tam test
 python3 benchmark.py --provider openai --model gpt-5-mini --test-type all
 python3 benchmark.py --provider anthropic --model claude-sonnet-4-5-20250929 --test-type all
 
 # 3. Detaylı analiz
-python3 full_analysis.py
-python3 compare_results.py
-python3 analyze_saq.py
+python3 tools/full_analysis.py
+python3 tools/compare_results.py
+python3 tools/analyze_saq.py
 ```
 
 ---
@@ -327,19 +327,19 @@ python3 rescore.py results/intermediate/mcq_intermediate.json
 
 ```bash
 # Karşılaştırma (ÖNERİLEN İLK ADIM)
-python3 run_claude_comparison.py
+python3 examples/run_claude_comparison.py
 
 # Tam test
 python3 benchmark.py --provider openai --model gpt-5-mini --test-type all
 
 # Model kayıtları
-python3 model_registry.py
+python3 tools/model_registry.py
 
 # Sonuç analizi
-python3 full_analysis.py
+python3 tools/full_analysis.py
 
 # Yeniden puanlama
-python3 rescore.py --type mcq
+python3 tools/rescore.py --type mcq
 
 # Yardım
 python3 benchmark.py --help
@@ -349,15 +349,16 @@ python3 benchmark.py --help
 
 ## 📞 Yardım ve Dokümantasyon
 
-- **Hızlı Başlangıç**: `QUICK_START.md`
+- **Hızlı Başlangıç**: `docs/QUICK_START.md`
 - **Ana Dokümantasyon**: `README.md`
-- **Bu Kılavuz**: `USAGE_GUIDE.md`
-- **Katkı**: `CONTRIBUTING.md`
+- **Bu Kılavuz**: `docs/USAGE_GUIDE.md`
+- **Katkı**: `docs/CONTRIBUTING.md`
+- **Model Listesi**: `docs/MODELS.md`
 
 ---
 
 **Hemen başlayın**:
 ```bash
-python3 run_claude_comparison.py
+python3 examples/run_claude_comparison.py
 ```
 
