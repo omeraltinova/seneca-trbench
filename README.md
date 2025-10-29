@@ -4,6 +4,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
+![](https://github.com/alicankiraz1/seneca-trbench/blob/main/results/combined_benchmark.png)
+
 **Seneca-TRBench**: Türk dilinin özelliklerini ve karmaşıklıklarını test eden kapsamlı bir benchmark sistemi. GPT-4o tabanlı otomatik puanlama ile LLM modellerinin Türkçe dil yeteneklerini objektif olarak değerlendirir.
 
 > **553 soru** (131 MCQ + 422 SAQ) ile Türkçe'nin morfolojik, semantik ve pragmatik özelliklerini test eder.
