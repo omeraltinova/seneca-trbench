@@ -12,7 +12,7 @@
 
 - 🔵 **OpenAI** (GPT-5, GPT-4, GPT-3.5)
 - 🟣 **Anthropic** (Claude 4.5, Claude 4.1, Claude 3)
-- 🟢 **Together.ai** (Llama, Mixtral, Qwen)
+- 🟢 **Together.ai** (Llama, Kimi-K2, Gemma, DeepSeek, Qwen)
 - 🔴 **Google Gemini** (Gemini 2.5 Pro, Flash, Lite)
 - 🤗 **HuggingFace** (Lokal modeller, Transformers - Mac uyumlu)
 
