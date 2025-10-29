@@ -6,8 +6,8 @@ from datetime import datetime
 from typing import Dict, List, Any
 from collections import defaultdict
 
-from evaluator import TestResult
-from model_registry import ModelRegistry
+from src.evaluator import TestResult
+from tools.model_registry import ModelRegistry
 
 
 class Reporter:

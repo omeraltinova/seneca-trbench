@@ -41,15 +41,15 @@ jobs:
         python -c "import rich; print('Rich OK')"
         python -c "import tenacity; print('Tenacity OK')"
         python -c "import tqdm; print('Tqdm OK')"
-        python -c "from models import OpenAIModel, AnthropicModel, TogetherModel, GeminiModel, HuggingFaceModel; print('Models OK')"
-        python -c "from utils import load_config, setup_logger; print('Utils OK')"
+        python -c "from src.models import OpenAIModel, AnthropicModel, TogetherModel, GeminiModel, HuggingFaceModel; print('Models OK')"
+        python -c "from src.utils import load_config, setup_logger; print('Utils OK')"
     
     - name: Check benchmark imports
       run: |
         python -c "from benchmark import create_model; print('Benchmark imports OK')"
-        python -c "from evaluator import Evaluator; print('Evaluator imports OK')"
-        python -c "from judge import Judge; print('Judge imports OK')"
-        python -c "from reporter import Reporter; print('Reporter imports OK')"
+        python -c "from src.evaluator import Evaluator; print('Evaluator imports OK')"
+        python -c "from src.judge import Judge; print('Judge imports OK')"
+        python -c "from src.reporter import Reporter; print('Reporter imports OK')"
     
     - name: Lint with Ruff (if installed)
       continue-on-error: true

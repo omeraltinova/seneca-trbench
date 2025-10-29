@@ -12,11 +12,11 @@ from pathlib import Path
 os.environ['ANTHROPIC_API_KEY'] = os.getenv('ANTHROPIC_API_KEY', '')
 os.environ['OPENAI_API_KEY'] = os.getenv('OPENAI_API_KEY', '')
 
-from models import AnthropicModel, OpenAIModel
-from evaluator import Evaluator
-from judge import Judge
-from reporter import Reporter
-from utils import load_config, setup_logger
+from src.models import AnthropicModel, OpenAIModel
+from src.evaluator import Evaluator
+from src.judge import Judge
+from src.reporter import Reporter
+from src.utils import load_config, setup_logger
 from rich.console import Console
 from rich.table import Table
 from rich.panel import Panel

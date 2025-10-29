@@ -10,10 +10,10 @@ from pathlib import Path
 from dataclasses import dataclass, asdict
 from typing import List, Optional
 
-from judge import Judge
-from reporter import Reporter
-from evaluator import TestResult
-from utils import load_config, setup_logger
+from src.judge import Judge
+from src.reporter import Reporter
+from src.evaluator import TestResult
+from src.utils import load_config, setup_logger
 from rich.console import Console
 from rich.panel import Panel
 

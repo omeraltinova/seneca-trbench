@@ -147,11 +147,11 @@ test_settings:
 ### Programatik Kullanım
 
 ```python
-from models import OpenAIModel
-from evaluator import Evaluator
-from judge import Judge
-from reporter import Reporter
-from utils import load_config
+from src.models import OpenAIModel
+from src.evaluator import Evaluator
+from src.judge import Judge
+from src.reporter import Reporter
+from src.utils import load_config
 
 config = load_config('config.yaml')
 model = OpenAIModel('gpt-4', config)
@@ -164,7 +164,7 @@ judge = Judge(config)
 scored_results = judge.score_results(results, 'mcq')
 
 reporter = Reporter(config)
-report = reporter.generate_report(scored_results, 'mcq', 'gpt-4')
+report = reporter.generate_report(scored_results, 'mcq', 'gpt-4', 'openai')
 ```
 
 ## Yardım

@@ -75,8 +75,8 @@ test_settings:
   retry_delay: 2
 
 paths:
-  mcq_data: "MCQ-Türkçe Benchmark.json"
-  saq_data: "SAQ-Türkçe-Benchmark.json"
+  mcq_data: "data/MCQ-Türkçe Benchmark.json"
+  saq_data: "data/SAQ-Türkçe-Benchmark.json"
   results_dir: "./results"
   logs_dir: "./logs"
 

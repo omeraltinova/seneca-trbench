@@ -5,9 +5,9 @@ from typing import Dict, List, Any, Tuple
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-from models.api_models import OpenAIModel
-from evaluator import TestResult
-from utils.logger import setup_logger
+from src.models.api_models import OpenAIModel
+from src.evaluator import TestResult
+from src.utils.logger import setup_logger
 
 
 class Judge:

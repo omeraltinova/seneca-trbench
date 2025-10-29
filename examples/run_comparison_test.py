@@ -8,15 +8,15 @@ import os
 import json
 from pathlib import Path
 
-# Set API keys
-os.environ['TOGETHER_API_KEY'] = "tgp_v1_FaDTR9zIxPUgIj94EaPGA7ebRBe1LYClp9JLWGXQ1JQ"
-os.environ['OPENAI_API_KEY'] = "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"
+# Set API keys from environment
+os.environ['TOGETHER_API_KEY'] = os.getenv('TOGETHER_API_KEY', '')
+os.environ['OPENAI_API_KEY'] = os.getenv('OPENAI_API_KEY', '')
 
-from models import OpenAIModel, TogetherModel
-from evaluator import Evaluator
-from judge import Judge
-from reporter import Reporter
-from utils import load_config, setup_logger
+from src.models import OpenAIModel, TogetherModel
+from src.evaluator import Evaluator
+from src.judge import Judge
+from src.reporter import Reporter
+from src.utils import load_config, setup_logger
 from rich.console import Console
 from rich.table import Table
 

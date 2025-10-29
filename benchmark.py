@@ -13,11 +13,11 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.progress import Progress, SpinnerColumn, TextColumn
 
-from models import OpenAIModel, AnthropicModel, TogetherModel, HuggingFaceModel, GeminiModel
-from evaluator import Evaluator
-from judge import Judge
-from reporter import Reporter
-from utils import load_config, setup_logger
+from src.models import OpenAIModel, AnthropicModel, TogetherModel, HuggingFaceModel, GeminiModel
+from src.evaluator import Evaluator
+from src.judge import Judge
+from src.reporter import Reporter
+from src.utils import load_config, setup_logger
 
 
 console = Console()
