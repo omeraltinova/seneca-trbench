@@ -1,0 +1,657 @@
+[
+ {
+   "Test Kategorisi": "TÜRKÇEYE ÖZGÜ DİL MEKANİKLERİ - Morfoloji Testleri ",
+   "Soru": "\"ev\" kökünden, \"siz evlerinizdekilerdenmişsiniz\" anlamını veren doğru yazım hangisi?\nA) evlerinizdekilerdenmişsiniz\nB) evleriniz’dekilerdenmişsiniz\nC) evlerinizdekilerdanmışsınız\nD) evlerinizdekilerdenmişsiniziniz",
+   "Cevap": "Doğru cevap: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"okul\" kökünden \"okullarımızdakilerden\" türetiminin doğru yazımı hangisi?\nA) okullarımızdakilerden\nB) okullarımızda’kilerden\nC) okullarımızdakiler’dan\nD) okul’larımızdakilerden",
+   "Cevap": "Doğru cevap: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"kitaplık\" kökünden \"kitaplıklarımızdakilere\" doğru biçim hangisi?\nA) kitaplıklarımızdakilere\nB) kitaplıklarımızda’kilere\nC) kitaplıklarımızdakilara\nD) kitaplıklarımız’dakilere",
+   "Cevap": "Doğru cevap: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"oda\" kökünden, \"odamızdakilerdenmişler\" için doğru yazım hangisi?\nA) odamızdakilerdenmişler\nB) odamız’dakilerdenmişler\nC) odamızdakilerdenmiş’ler\nD) odamızdakilerdenmişlar",
+   "Cevap": "Doğru cevap: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"arkadaş\" kökünden, \"arkadaşlarınızdaymışsınız\" doğru yazım hangisi?\nA)  arkadaşlarınız’da’ymışsınız\nB) arkadaşlarınızdaymışsınız\nC) arkadaşlarınızda’ymışsınız\nD) arkadaşlarınızdaymışsınz",
+   "Cevap": "Doğru cevap: B"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "Aşağıdakilerden hangisi **-ki** ilgi zamiriyle kurulmuş doğru ekleşme örneğidir?\nA) dünkü toplantı\nB) dünkü’ toplantı\nC) dünki toplantı\nD) dünkü’ toplantı",
+   "Cevap": "Doğru cevap: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "Hangisi **-mi** soru eki kullanımında doğrudur?\nA) Geldinmi?\nB) Geldin mi?\nC) Geldin’mi?\nD) Geldin mi?",
+   "Cevap": "Doğru cevap: B"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"de/da\" bağlacı hangisinde doğru yazılmıştır?\nA) Sen de gel.\nB) Sen’de gel.\nC) Sen de’ gel.\nD) Sen’de’ gel.",
+   "Cevap": "Doğru cevap: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"mi\" soru eki ve kişi eki sıralaması hangisinde doğrudur?\nA) Geliyormu yum? \nB) Geliyorum mi?\nC) Geliyor muyum?\nD) Geliyor’muyum?",
+   "Cevap": "Doğru cevap: C"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"-leyin/-leyken\" kullanımı: Hangisi doğrudur?\nA) sabahleyin\nB) sabah leyin\nC) sabah’leyin\nD) sabahle’yin",
+   "Cevap": "Doğru cevap: A"
+ },
+ {
+   "Test Kategorisi": "TÜRKÇEYE ÖZGÜ DİL MEKANİKLERİ - Ünlü Uyumu, Tamlayan–Tamlanan, Kaynaştırmalar",
+   "Soru": "\"kitap + (2. çoğul iyelik)\" doğru biçim?\nA) kitapınız\nB) kitabınız\nC) kitabinız\nD) kitabıniz",
+   "Cevap": "Doğru cevap: B"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"renk + -(i)\" (belirtme durumu) doğru biçim?\nA) rengı\nB) renki\nC) renkı\nD) rengi",
+   "Cevap": "Doğru cevap: D"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"ağaç + -(i)\" doğru biçim?\nA) ağacı\nB) ağaçı\nC) ağaçi\nD) ağacı",
+   "Cevap": "Doğru cevap: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"yurt + -(a)\" (yönelme) doğru biçim?\nA) yurd’a \nB) yurta\nC) yurda\nD) yurt’a",
+   "Cevap": "Doğru cevap: C"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"şehir + -(i)\" doğru biçim?\nA) şehri\nB) şehiri\nC) şehirı\nD) şehrı",
+   "Cevap": "Doğru cevap: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"kalp + -(i)\" doğru biçim?\nA) kalbı\nB) kalpı\nC) kalpi\nD) kalbi",
+   "Cevap": "Doğru cevap: D"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"gönül + -(ü)\" doğru biçim?\nA) gönlū\nB) gönülü\nC) gönlü\nD) gönül’ü",
+   "Cevap": "Doğru cevap: C"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"omuz + -(u)\" doğru biçim?\nA) omz’u\nB) omuzu\nC) omzu\nD) omuz’u",
+   "Cevap": "Doğru cevap: C"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"akıl + -(ı)\" doğru biçim?\nA) akıl’ı\nB) akılı\nC) akl’ı\nD) aklı",
+   "Cevap": "Doğru cevap: D"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"burun + -(u)\" doğru biçim?\nA) burnu\nB) burunu\nC) burun’u\nD) burn’u",
+   "Cevap": "Doğru cevap: A"
+ },
+ {
+   "Test Kategorisi": "TÜRKÇEYE ÖZGÜ DİL MEKANİKLERİ - Ses Olayları – Düşme, Türeme, Yumuşama, Benzeşme",
+   "Soru": "Ünlü düşmesi görülen hangisi doğrudur?\nA) ağız → ağızı\nB) ağız → ağzıı\nC) ağız → ağzı\nD) ağız → ağz’ı",
+   "Cevap": "Doğru cevap: C"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "Ünsüz yumuşaması (p-ç-t-k → b-c-d-g/ğ): Hangisi doğru?\nA) ağaç + -(a) = ağaça\nB) ağaç + -(a) = ağaca\nC) ağaç + -(a) = ağağa\nD) ağaç + -(a) = ağaç’a",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "Ünsüz türemesi (çiftleşme) doğru örnek hangisi?\nA) hak + -(ı) = hakı\nB) hak + -(ı) = hakkı\nC) hak + -(ı) = hakki\nD) hak + -(ı) = hak’ı",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "Ünsüz türemesi için doğru örnek hangisi?\nA) ret + -(i) = redi\nB) ret + -(i) = reti\nC) ret + -(i) = ret’i\nD) ret + -(i) = reddi",
+   "Cevap": "Doğru: D"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "Ünsüz türemesi doğru örnek hangisi?\nA) his + -(i) = hissi\nB) his + -(i) = hisi\nC) his + -(i) = his’i\nD) his + -(i) = hisşi",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "Benzeşme kuralı (cı/çi/çı/çü): Hangisi doğru?\nA) kitap + -cı = kitapcı\nB) kitap + -cı = kitapçı\nC) sanat + -cı = sanatcı\nD) hukuk + -ci = hukukci",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "İstisna (yumuşama yok): Hangisi doğru?\nA) saat + -(i) = saati\nB) saat + -(i) = saatı\nC) vakit + -(i) = vakıti\nD) sanat + -(i) = sanadı",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "Ünlü düşmesi istisnası olmayan hangisi?\nA) gönül → gönlü\nB) boyun → boynu\nC) burun → burnu\nD) oyun → oyunu",
+   "Cevap": "Doğru: D"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "Kaynaştırma harfi \"y\" doğru kullanımı hangisi?\nA) araba + -(ı) = arabaı\nB) araba + -(ı) = arabayı\nC) köy + -(e) = köye’y\nD) dede + -(i) = dedei",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "3. tekil iyelikten sonra belirtme durumu eki doğru sıralama hangisi? (\"ev + -(i) + -(n)i\")\nA) evini\nB) eviı\nC) evnini\nD) evin’i",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "TÜRKÇEYE ÖZGÜ DİL MEKANİKLERİ - Edge Case’ler – Yabancı Kökenli + Türkçe Ek, Özel İsim, Kısaltmalar",
+   "Soru": "\"computer\" kelimesi **cins ad** olarak kullanıldığında çoğul + iyelik doğru yazım?\nA) computerlarımız\nB) computer’larımız\nC) kompitırlar’ımız\nD) computer larımız",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "Özel isim + ek hangisi doğru?\nA) Türkiye’de\nB) Türkiyede\nC) Türkiye de\nD) Türkiye’de’",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "Marka adı + ek hangisi doğru?\nA) WhatsApp’ta\nB) Whatsappta\nC) WhatsApp ta\nD) WhatsAppta",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "Kısaltma (kurum) + ek hangisi doğru?\nA) TBMM’de\nB) TBMMde\nC) TBMM de\nD) TBMM’de’",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "Yabancı özel ad + ek hangisi doğru?\nA) Shakespeare’i'\nB) Shakespearei\nC) Shakespeare’i\nD) Shakespeare’i̇",
+   "Cevap": "Doğru: C"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"podcast\" (cins ad) + belirtme durumu doğru hangisi?\nA) podcasti dinledim\nB) podcast’i dinledim\nC) podcast’i’ dinledim\nD) podcasteyi dinledim",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "Rakam + ek (yıl) hangisi doğru?\nA) 2025 te\nB) 2025’te\nC) 2025’ te\nD) 2025te",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "Özel ada bağlı tamlama + ek nereye gelir?\nA) Ege Denizi’nde\nB) Ege Denizi nde\nC) Ege denizi’nde\nD) Ege’ Denizi’nde",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "Harf/karakter adı olarak marka: \"X\" platformu + ek hangisi doğru?\nA) Xte\nB) X’te\nC) X te\nD) X’ t e",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "Yabancı kökenli **cins ad** + çokluk + durum eki:\nA) serverlarda\nB) server’larda\nC) server larda\nD) server’ lar’da",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "TÜRKÇEYE ÖZGÜ DİL MEKANİKLERİ - Birleşik Kelimeler, Yazım ve Ekleşme",
+   "Soru": "Birleşik kelimede doğru türetim hangisi?\nA) kahvealtı\nB) kahvaltı\nC) kahve altı\nD) kahve-altı",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "Birleşik kelime + yapım eki:\nA) gecekonducu\nB) gece konducu\nC) gecekondu’cu\nD) gece-koncucu",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "Birleşik kelimeye durum eki:\nA) başucu kitabını\nB) baş ucu kitabını\nC) başucu kitabı’nı\nD) baş ucu kitabı’nı",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"açıkgöz\"den isim yapım ekiyle türetim hangisi doğrudur?\nA) açıkgözlük\nB) açıkgözlülük\nC) açık gözlülük\nD) açık-gözlük",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"başüstüne\" ifadesi hangi kullanımda doğrudur?\nA) Başüstüne, yarın teslim ederim.\nB) Baş üstüne, yarın teslim ederim.\nC) Baş üstüne’, yarın teslim ederim.\nD) Başüstüne’, yarın teslim ederim.",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "TÜRKÇEYE ÖZGÜ DİL MEKANİKLERİ - Karışık – Dizeleme, Yanlış ama Yaygın Biçimler, İnce Ayrımlar",
+   "Soru": "Hangisi \"yanlış ama yaygın\" yazıma örnektir?\nA) fotoğrafı\nB) fotografı\nC) fotoğraf’ı\nD) fotoğra fı",
+   "Cevap": "Doğru: C"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"zannetmek\" fiilinin şimdiki zaman 3. tekil doğru biçimi?\nA) zannediyor\nB) zann ediyor\nC) zannediyör\nD) zann’ediyor",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"televizyon + -(u)\" doğru biçim?\nA) televiziyonu\nB) televizyon’ı\nC) televizyonu\nD) televizyon’u",
+   "Cevap": "Doğru: C"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"hukuk + -(u)\" (istisna: yumuşama bekleme) hangisi doğru?\nA) hukuku\nB) huguğu\nC) hukuğu\nD) hukuk’u",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "Aşağıdaki cümlelerden hangisinde **birden çok** ek kuralı doğru uygulanmıştır?\nA) \"Arkadaşlarınızda’kiler’denmişsiniz.\"\nB) \"Arkadaşlarınız’da’kiler’den’mişsiniz.\"\nC) \"Arkadaşlarınızdakilerdenmişsiniz.\"\nD) \"Arkadaşlarınızdakilerden’mışsınız.\"",
+   "Cevap": "Doğru: C"
+ },
+ {
+   "Test Kategorisi": "BAĞLAMSAL ANLAM VE ÇIKARIM - Gizli Özne / Bağlamsal Neden–Sonuç",
+   "Soru": "\"Zeynep okula gitti. Derste uyudu.\"\nKim uyudu?\nA) Öğretmen  B) Zeynep C) Annesi D) Sınıf",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Mert anahtarı düşürdü. Aradı ama bulamadı.\"\nKim bulamadı?\nA) Komşusu B) Güvenlik C) Mert D) Anahtar",
+   "Cevap": "Doğru: C"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Öğretmen içeri girdi. Öğrenciler sustu.\"\nKim sustu?\nA) Müdür  B) Öğretmen C) Öğrenciler D) Veliler",
+   "Cevap": "Doğru: C"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Ali kapıyı çaldı. Açılmayınca geri döndü.\"\nKim geri döndü?\nA) Kapı B) Ali C) Ev sahibi D) Komşu",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Ayşe raporu yazdı; sonra gönderdi.\"\nKim gönderdi?\nA) Müdürü B) Ayşe C) Sekreter D) Sistem",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Toplantı uzayınca herkes yoruldu.\"\nBurada \"herkes\" kimleri kapsamaktadır?\nA) Sunucu cihazı B) Katılımcılar C) Projeksiyon D) Salon",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Ekip yetiştiremedi, teslim tarihi ertelendi.\"\nErtelenmenin bağlamsal nedeni nedir?\nA) Ekip gecikti B) Müşteri tatildeydi C) Sistem kapalıydı D) Hava yağışlıydı",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Çocuk ağladı. Oyuncağı kırılmıştı.\"\nAğlamanın en olası nedeni nedir?\nA) Uykusu gelmesi  B) Oyuncağın kırılması C) Aç olması D) Düşmesi",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Yağmur yağdı; yollar kapandı.\"\nİma edilen sonuç hangisi?\nA) Trafik aksadı B) Güneş açtı C) Sıcaklık arttı D) Tatil ilan edildi",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Selin arabayı park etti. Ardından içeri koştu.\"\nKim koştu?\nA) Selin B) Araba C) Güvenlik D) Arkadaşı",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Mektubu yazdı. Postaya verdi.\"\nBu iki cümle bir araya geldiğinde hangi eylem gerçekleşmiş olur?\nA) Mektubu gönderdi B) Mektubu yırttı C) Mektubu geri aldı D) Mektubu sakladı",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Telefonu çaldı, açmadı.\"\nKim açmadı?\nA) Telefonun sahibi B) Arayan C) Operatör D) Kargo görevlisi",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "BAĞLAMSAL ANLAM VE ÇIKARIM - Çok Anlamlılık / Bağlamdan Anlam Seçimi",
+   "Soru": "\"Sınıfta hatasını fark edince yüzü kızardı.\"\n\"Yüzü kızardı\" ne anlama gelir?\nA) Üşüdü B) Güneş yaktı C) Ruj sürdü D) Utandı",
+   "Cevap": "Doğru: D"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Saatlerce plajda kaldı; yüzü kızardı.\"\nBuradaki anlam?\nA) Güneş yaktı B) Utandı C) Ürkekleşti D) Üzüldü",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Toplantıda ona çok ağır konuştu.\"\n\"Ağır konuşmak\" ne demektir?\nA) Kısık sesle konuşmak B) Yavaş konuşmak C) Sert sözler söylemek D) Susmak",
+   "Cevap": "Doğru: C"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Projeyi dinleyince ışık gördü.\"\n\"Işık görmek\" burada hangi anlamda?\nA) Çözüm/umut görmek B) Lambayı fark etmek C) Göz muayenesi olmak D) Fotoğraf çekmek",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Dolar düştü.\"\n\"Düşmek\" hangi anlamda?\nA) Değer azalmak B) Yere düşmek C) Değer kazanmak D) Askıya asılmak",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Tanıştık ama çok soğuk biri.\"\n\"Soğuk\" hangi anlamda?\nA) Mesafeli B) Üşüyen C) Düşünceli D) Sakin",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Başlamak isteyince el verdik.\"\n\"El vermek\" burada ne demektir?\nA) Fiziksel el vermek B) Destek olmak C) Isınmak D) Alkışlamak",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Güvenlik bizim kırmızı çizgimiz.\"\n\"Kırmızı çizgi\" neyi anlatır?\nA) Taviz verilmeyen sınır B) Kırmızı boya çizgisi C) Trafik şeridi D) Moda çizgisi",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Son filminden sonra yıldızı parladı.\"\n\"Yıldızı parlamak\" ne demektir?\nA) Ün kazanmak B) Astronom olmak C) Elektrik çarpmak D) Mücevher almak",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Planları gerçekçi; ayakları yere basıyor.\"\n\"Ayakları yere basmak\" hangi anlamda?\nA) Zıplamak B) Gerçekçi olmak C) Egzersiz yapmak D) Korkmak",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "BAĞLAMSAL ANLAM VE ÇIKARIM - Deyim ve Mecaz Çözümleme",
+   "Soru": "\"Hesabı ödedi, bahşiş de bıraktı; eli açık biridir.\"\n\"Eli açık\" ne demektir?\nA) Unutkan B) Avucu açık C) Cömert D) Tedbirsiz",
+   "Cevap": "Doğru: C"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Sözünü tutmayınca gözden düştü.\"\n\"Gözden düşmek\" ne demektir?\nA) İtibar kaybetmek B) Uykusu gelmek C) Yere düşmek D) Lens kaybetmek",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Fısıltıları duyunca kulağına kar suyu kaçtı.\"\nBu deyim ne anlatır?\nA) Üşümek B) Kuşku duymak C) Duymamak D) Hastalanmak",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Kimse risk almak istemeyince o elini taşın altına koydu.\"\nDeyimin anlamı?\nA) İstifa etmek  B) İnşaata başlamak C) Taş toplamak D) Sorumluluk almak",
+   "Cevap": "Doğru: D"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Başarısından sonra burnundan kıl aldırmıyor.\"\nAnlamı?\nA) Kibirli olmak B) Burnu tıkalı olmak C) Aşırı titiz olmak D) Sık tıraş olmak",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Proje dağılınca ipleri eline aldı.\"\nAnlamı?\nA) Kontrolü devralmak B) İp satın almak C) Spor yapmak D) Dayanıklılık göstermek",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Rica etmemize rağmen ayak diredi.\"\nAnlamı?\nA) Yorulmak B) Yürümeyi sevmemek C) İnatla karşı çıkmak D) Düşmek",
+   "Cevap": "Doğru: C"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"İlerlememize taş koyuyorlar.\"\nAnlamı?\nA) İnşaat yapmak B) Engel olmak C) Malzeme vermek D) Yol döşemek",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"İki saat boyunca kafa ütüledi.\"\nAnlamı?\nA) Çok konuşup bunaltmak B) Saç kurutmak C) Zor soru sormak D) Ders çalışmak",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Sürekli gürültüden kafam şişti.\"\nAnlamı?\nA) Bunamak B) Baş ağrısı/bunalma C) Şapkası büyümek D) Öfke kusmak",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"En sonunda ağzından baklayı çıkardı.\"\nAnlamı?\nA) Sırrını söylemek B) Yemek yemek C) Konuşmayı kesmek D) Yutkunmak",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Haksızlığa uğradı ama sineye çekti.\"\nAnlamı?\nA) Katlanmak B) Nefes almak C) İç çekmek D) Göğsünü germek",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Yarınki etkinlik için içi içine sığmıyor.\"\nİfade edilen duygu?\nA) Heyecan B) Üzüntü C) Öfke D) Korku",
+   "Cevap": "A) Heyecan"
+ },
+ {
+   "Test Kategorisi": "BAĞLAMSAL ANLAM VE ÇIKARIM - Zamir Çözümleme / Gönderim Belirleme",
+   "Soru": "\"Ali, Mehmet’e kendi kalemini verdi.\"\nKalem kimin?\nA) Ali’nin B) Mehmet’in C) İkisinin ortak D) Belirsiz",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Ali, Mehmet’e onun kalemini verdi; çünkü üzerinde Mehmet’in adı yazıyordu.\"\n\"onun\" kim?\nA) Ali B) Mehmet C) Üçüncü kişi D) Belirsiz",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Ayşe, Zeynep’e kendi raporunu gösterdi; onun raporunu yarına bıraktı.\"\nBuradaki \"onun\" kim?\nA) Zeynep B) Ayşe C) Editör D) Belirsiz",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Hakan, Cem’e ‘E-postanı aldım, ona az sonra cevap veriyorum’ dedi.\"\n\"ona\" neye gönderme yapıyor?\nA) E-postaya B) Cem’e C) Hakan’a D) Müdüre",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Melis, Emre’ye kendi yerine onun konuşmasını istedi.\"\n\"onun\" kim?\nA) Emre B) Melis C) Moderatör D) Belirsiz",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Mert, Hakan’a kendi fotoğrafını gönderdi.\"\nKimin fotoğrafı gönderildi?\nA) Hakan’ın B) Mert’in C) İkisinin birlikte D) Belirsiz",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Buse, Dila’ya onun danışmanıyla konuşacağını söyledi.\"\n\"onun\" kim?\nA) Dila B) Buse C) Danışman D) Belirsiz",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Otel görevlisi, müşteriye odasının hazır olduğunu söyledi.\"\n\"Odasının\" kimin odasıdır?\nA) Müşterinin B) Görevlisinin C) Otelin D) Belirsiz",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Yönetmen, oyuncuya ona uygun bir rol yazdıklarını söyledi.\"\n\"ona\" kim?\nA) Oyuncu B) Yönetmen C) Senarist D) İzleyici",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Berk, Hakan’a kendi hatasını değil, onun hatasını düzelttiğini söyledi.\"\n\"onun\" kim?\nA) Hakan B) Berk C) Editör D) Belirsiz",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "Diyalog: Ece: \"Bunu kimseye söyleme.\" (Az önce sürpriz parti planını anlattı.)\n\"Bunu\" neye gönderme yapıyor?\nA) Hediyeye B) Başka bir konuya C) Sürpriz parti planına D) Tarihe",
+   "Cevap": "Doğru: C"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Tolga, Eren’e bunu imzalayıp göndermesini söyledi.\" (Masadaki sözleşme)\n\"bunu\" ne?\nA) Kargo fişi B) Zarf C) Kalem D) Masadaki sözleşme",
+   "Cevap": "Doğru: D"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Arda, Zeynep’e onu havaalanından almasını söyledi; Ege sabaha karşı inecek.\"\n\"onu\" kim?\nA) Ege B) Arda C) Zeynep D) Taksici",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Sinem, Can’a ‘Kendi dosyamı değil, onu arşive kaldır’ dedi.\" (Bağlam: Masadaki kırmızı dosya)\n\"onu\" ne?\nA) Masadaki kırmızı dosya B) Sinem’in dosyası C) Can’ın özgeçmişi D) Belirsiz",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Müdür, ekibe onun onayı olmadan işlem yapmamalarını söyledi. Onay mercii yalnızca CFO’dur.\"\n\"onun\" kim?\nA) CFO B) Müdür C) Ekip lideri D) Müşteri",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "YARATICI DÖNÜŞÜM VE TRANSFER - Stil Transferi",
+   "Soru": "Metni resmi e‑posta tonuna çevir: \"Sunucu çöktü, acil bak!\"\nSeçenekler: A) \"Merhaba, bir sorunumuz var galiba.\" B) \"Sayın İlgili, üretim sunucusunda kesinti tespit edilmiştir; müdahale rica ederiz.\" C) \"Kötü oldu bu.\"",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "YARATICI DÖNÜŞÜM VE TRANSFER - Stil Transferi",
+   "Soru": "Soru: \"Yerel maksimumdan kaçınmak için momentum eklendi.\" → Ürün notu. Doğru ifade hangisi?\nA) \"Matematik bunalımı çözüldü.\" B) \"Eğitim daha pürüzsüz ilerlesin diye momentum ekledik; takılmalar azaldı.\" C) \"Model artık mucize yaratıyor.\"",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "YARATICI DÖNÜŞÜM VE TRANSFER - Stil Transferi",
+   "Soru": "Soru: \"TLS 1.0 kullanımını sonlandırdık.\" → Bürokratik dil.\nA) \"Artık kullanmıyoruz.\" B) \"Geriye dönük uyumluluğu bitirdik.\" C) \"Kurumsal uyum gereklilikleri kapsamında TLS 1.0 devre dışı bırakılmıştır.\"",
+   "Cevap": "Doğru: C"
+ },
+ {
+   "Test Kategorisi": "YARATICI DÖNÜŞÜM VE TRANSFER - Stil Transferi",
+   "Soru": "Soru: \"Kullanıcı verisi yalnızca açık rıza ile işlenir.\" → Sözleşme cümlesi hangisi doğru?\nA) \"Veriyi canımız isteyince işleriz.\" B) \"Kişisel veriler, ilgili kişinin açık rızası olmadan işlenmez.\" C) \"Rıza gerekmez.\"",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "YARATICI DÖNÜŞÜM VE TRANSFER - Stil Transferi",
+   "Soru": "\"Korsan ağzı\"na çevir: \"Hazine haritasını bulduk!\"\nA) \"Plan elimizde.\" B) \"Haritayı bulduk ha!\" C) \"Bulundu.\"",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "YARATICI DÖNÜŞÜM VE TRANSFER - Stil Transferi",
+   "Soru": "\"A/B testi istatistiksel olarak anlamsız.\" → Basın bülteni cümlesi hangisi doğru?",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "YARATICI DÖNÜŞÜM VE TRANSFER - Stil Transferi",
+   "Soru": "Soru: \"Karmaşıklığı O(n log n)’e indirdik.\" → Blog başlığı?\nA) \"Sıralamayı hızlandırdık: n log n!\" B) \"Bir şeyler yaptık.\" C) \"Performans aynı.\"",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "YARATICI DÖNÜŞÜM VE TRANSFER - Stil Transferi",
+   "Soru": "\"Gereksiz ayrıntıları atarak sadeleştir\" → Metin: \"Çok parametreli, uzun uzadıya açıklamalar içeren karmaşık bir sistem…\"\nDoğru sadeleştirme?\nA) \"Karmaşık bir sistem.\" B) \"Detaylar önemli.\" C) \"Bence güzel.\"",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "YARATICI DÖNÜŞÜM VE TRANSFER - Analoji Üretimi",
+   "Soru": "Arı : Bal :: İnek : ?\nA) Yün B) Süt C) Yumurta D) Tüy",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "YARATICI DÖNÜŞÜM VE TRANSFER - Analoji Üretimi",
+   "Soru": "DNS : Alan adı :: Rehber : ?\nA) Adres B) Telefon numarası C) Fotoğraf D) Yön",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "YARATICI DÖNÜŞÜM VE TRANSFER - Analoji Üretimi",
+   "Soru": "Firewall : Ağ :: Kapı bekçisi : ?\nA) Oda B) Mahalle C) Bina girişi D) Asansör",
+   "Cevap": "Doğru: C"
+ },
+ {
+   "Test Kategorisi": "YARATICI DÖNÜŞÜM VE TRANSFER - Analoji Üretimi",
+   "Soru": "Komut : Terminal :: Soru : ?\nA) Cevap B) Mikrofon C) Forum D) Bilgi",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "YARATICI DÖNÜŞÜM VE TRANSFER - Analoji Üretimi",
+   "Soru": "Cache : Hız :: Arşiv : ?\nA) Depolama B) Güvenlik C) Uyumluluk D) Soğutma",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "YARATICI DÖNÜŞÜM VE TRANSFER - Analoji Üretimi",
+   "Soru": "Sinyal : Gürültü :: Fayda : ?\nA) Zarar B) Maliyet C) Risk D) Kategori",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "YARATICI DÖNÜŞÜM VE TRANSFER - Analoji Üretimi",
+   "Soru": "RAM : Geçicilik :: SSD : ?\nA) Kalıcılık B) Gecikme C) Bant genişliği D) Sıcaklık",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "YARATICI DÖNÜŞÜM VE TRANSFER - Analoji Üretimi",
+   "Soru": "Hash : Parmak izi :: Şifreleme : ?\nA) Zarf B) Kilitli kasa C) Mühür D) Fotoğraf",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "YARATICI DÖNÜŞÜM VE TRANSFER - Analoji Üretimi",
+   "Soru": "CI : Otomasyon :: Code Review : ?\nA) Peer değerlendirme B) Sanallaştırma C) İzleme D) Dağıtım",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "YARATICI DÖNÜŞÜM VE TRANSFER - Analoji Üretimi",
+   "Soru": "Model : Overfit :: İnsan : ?\nA) Ezber B) Spor C) Uyku D) Diyet",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "YARATICI DÖNÜŞÜM VE TRANSFER - Analoji Üretimi",
+   "Soru": "CDN : Yakınlık :: Kütüphane : ?\nA) Sessizlik B) Şube C) Raf D) Üye",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "YARATICI DÖNÜŞÜM VE TRANSFER - Analoji Üretimi",
+   "Soru": "Git Rebase : Tarih düzeni :: Edit : ?\nA) Yazım B) Zaman C) Şekil D) Ses",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "YARATICI DÖNÜŞÜM VE TRANSFER - Analoji Üretimi",
+   "Soru": "Kuyruk : FIFO :: Yığın : ?\nA) LIFO B) BFS C) DFS D) O(1)",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "YARATICI DÖNÜŞÜM VE TRANSFER - Analoji Üretimi",
+   "Soru": "Aşı : Bağışıklık :: Yedek : ?\nA) Kurtarma B) Uyum C) Gelişme D) Türetme",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "YARATICI DÖNÜŞÜM VE TRANSFER - Analoji Üretimi",
+   "Soru": "Zayıf parola : Kırılma :: Açık kapı : ?\nA) Kilit B) Hırsızlık C) Pencere D) Alarm",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "YARATICI DÖNÜŞÜM VE TRANSFER - Format Dönüşümleri",
+   "Soru": "Metni JSON yap: \"ad=Ayşe, rol=Analist, aktif=true\".\nDoğru JSON hangisi?\nA) {ad:\"Ayşe\",rol:\"Analist\",aktif:true} B) {\"ad\":\"Ayşe\",\"rol\":\"Analist\",\"aktif\":true} C) {Ayşe,Analist,true}",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "YARATICI DÖNÜŞÜM VE TRANSFER - Format Dönüşümleri",
+   "Soru": "Metni tabloya çevir: \"Öğe=CPU|Güç=65W; Öğe=GPU|Güç=150W\" → Sütunlar \"Öğe, Güç\". Hangi satır doğru?\nA) CPU–65W ve GPU–150W B) 65W–CPU ve 150W–GPU C) CPU–150W ve GPU–65W",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "Metni regex ile e‑posta çıkarma: \"İletişim: destek@example.com\" → Hangi regex uygun?\nA) [a-z]+ B) \\S+@\\S+\\.\\S+ C) [0-9]+",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Sıcaklık 24°C, Nem %60\" → cümle → anahtar:değer. Doğru?\nA) Sıcaklık=24C;Nem=60% B) sicaklik:24; nem:60 C) 24,60",
+   "Cevap": "Doğru: B"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"1,2,3\" → JSON dizi doğru mu?\nA) [1,2,3] B) {1,2,3} C) \"1,2,3\"",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Log: 2025‑10‑10 12:00 ERROR kod=500\" → Alanlara ayırma doğru?\nA) tarih, saat, seviye, kod B) seviye, kod, saat C) kod, seviye",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Ad=Zeynep; Puan=88; Geçti=Evet\" → Tür dönüşümü. Hangisi doğru JSON?\nA) {\"Ad\":\"Zeynep\",\"Puan\":88,\"Gecti\":true} B) {\"Ad\":Zeynep,\"Puan\":\"88\",\"Gecti\":\"Evet\"} C) {Ad:'Zeynep'}",
+   "Cevap": "Doğru: A"
+ },
+ {
+   "Test Kategorisi": "",
+   "Soru": "\"Şehir=Ankara; Nüfus≈5,7M\" → Markdown tablo doğru?\nA) |Şehir|Nüfus|\\n|---|---|\\n|Ankara|5.7M| B) |Ankara|5.7M| C) Şehir:Ankara",
+   "Cevap": "Doğru: A"
+ }
+]

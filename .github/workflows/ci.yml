@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python-version: ['3.9', '3.10', '3.11', '3.12']
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Cache pip packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Verify installation
+      run: |
+        python -c "import yaml; print('PyYAML OK')"
+        python -c "import rich; print('Rich OK')"
+        python -c "import tenacity; print('Tenacity OK')"
+        python -c "import tqdm; print('Tqdm OK')"
+        python -c "from models import OpenAIModel, AnthropicModel, TogetherModel, GeminiModel, HuggingFaceModel; print('Models OK')"
+        python -c "from utils import load_config, setup_logger; print('Utils OK')"
+    
+    - name: Check benchmark imports
+      run: |
+        python -c "from benchmark import create_model; print('Benchmark imports OK')"
+        python -c "from evaluator import Evaluator; print('Evaluator imports OK')"
+        python -c "from judge import Judge; print('Judge imports OK')"
+        python -c "from reporter import Reporter; print('Reporter imports OK')"
+    
+    - name: Lint with Ruff (if installed)
+      continue-on-error: true
+      run: |
+        pip install ruff || true
+        ruff check . || true
+
