@@ -55,9 +55,9 @@ Projenizi GitHub'a yüklemeden önce kontrol listesi.
 ### 1. Repository Oluştur
 ```bash
 # GitHub'da yeni repo oluştur
-# Adı: turkish-benchmark veya turkish-llm-benchmark
-# Description: Comprehensive benchmarking system for Turkish language LLMs
-# Public/Private: Public önerilir
+# Adı: seneca-trbench
+# Description: Seneca-TRBench - Comprehensive Turkish LLM Benchmark System
+# Public/Private: Private (şimdilik)
 # Initialize: .gitignore ve LICENSE eklemeden (zaten var)
 ```
 
@@ -71,7 +71,7 @@ git commit -m "Initial release: Turkish LLM Benchmark System v1.0.0"
 
 ### 3. Remote Ekle ve Push
 ```bash
-git remote add origin https://github.com/KULLANICI_ADI/turkish-benchmark.git
+git remote add origin https://github.com/KULLANICI_ADI/seneca-trbench.git
 git branch -M main
 git push -u origin main
 ```
@@ -137,13 +137,14 @@ Yayınlandıktan sonra:
 
 İlk commit:
 ```bash
-git commit -m "feat: Initial release of Turkish LLM Benchmark System
+git commit -m "feat: Initial release of Seneca-TRBench v1.0.0
 
 - 553 Turkish language test questions (131 MCQ + 422 SAQ)
 - Support for 5 AI providers (OpenAI, Anthropic, Together, Gemini, HuggingFace)
-- Automated GPT-4o scoring
+- Automated GPT-4o scoring with category analysis
 - Comprehensive documentation and examples
 - CI/CD with GitHub Actions
-- Mac/Linux/Windows compatible"
+- Mac/Linux/Windows compatible
+- Transformers support for local models"
 ```
 

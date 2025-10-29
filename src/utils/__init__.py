@@ -1,4 +1,4 @@
-"""Utility modules for Turkish Benchmark System."""
+"""Utility modules for Seneca-TRBench."""
 
 from .config_loader import load_config
 from .logger import setup_logger

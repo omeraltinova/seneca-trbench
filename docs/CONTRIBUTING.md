@@ -1,6 +1,6 @@
 # Katkıda Bulunma Rehberi
 
-Türkçe Benchmark projesine katkıda bulunmak istediğiniz için teşekkürler! 🎉
+Seneca-TRBench projesine katkıda bulunmak istediğiniz için teşekkürler! 🎉
 
 ## Katkı Yapma Yolları
 
@@ -29,8 +29,8 @@ Türkçe Benchmark projesine katkıda bulunmak istediğiniz için teşekkürler!
 ### 1. Projeyi Fork Edin
 
 ```bash
-git clone https://github.com/your-username/Turkish-Benchmark.git
-cd Turkish-Benchmark
+git clone https://github.com/your-username/seneca-trbench.git
+cd seneca-trbench
 ```
 
 ### 2. Geliştirme Ortamını Kurun

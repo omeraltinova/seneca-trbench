@@ -1,4 +1,4 @@
-# 📚 Türkçe Benchmark - Dokümantasyon İndeksi
+# 📚 Seneca-TRBench - Dokümantasyon İndeksi
 
 ## 📄 Ana Dokümantasyon (4 Dosya)
 

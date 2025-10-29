@@ -1,8 +1,8 @@
-# Turkish LLM Benchmark System - Summary
+# Seneca-TRBench - Turkish LLM Benchmark System
 
 ## Overview
 
-Comprehensive benchmarking system for evaluating Large Language Models (LLMs) on Turkish language capabilities. Tests 553 questions across morphological, semantic, and pragmatic aspects of Turkish.
+**Seneca-TRBench** is a comprehensive benchmarking system for evaluating Large Language Models (LLMs) on Turkish language capabilities. Tests 553 questions across morphological, semantic, and pragmatic aspects of Turkish.
 
 ## Key Features
 
@@ -56,8 +56,8 @@ Comprehensive benchmarking system for evaluating Large Language Models (LLMs) on
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/turkish-benchmark
-cd turkish-benchmark
+git clone https://github.com/alicankiraz1/seneca-trbench
+cd seneca-trbench
 
 # Install dependencies
 pip install -r requirements.txt
@@ -116,19 +116,19 @@ MIT License - See LICENSE file for details
 If you use this benchmark in your research, please cite:
 
 ```bibtex
-@software{turkish_llm_benchmark,
-  title={Turkish LLM Benchmark System},
-  author={Turkish Benchmark Contributors},
+@software{seneca_trbench,
+  title={Seneca-TRBench: Turkish LLM Benchmark System},
+  author={Seneca-TRBench Contributors},
   year={2025},
-  url={https://github.com/yourusername/turkish-benchmark}
+  url={https://github.com/alicankiraz1/seneca-trbench}
 }
 ```
 
 ## Contact
 
 For questions, issues, or contributions:
-- GitHub Issues: [Issues](https://github.com/yourusername/turkish-benchmark/issues)
-- Pull Requests: [PRs](https://github.com/yourusername/turkish-benchmark/pulls)
+- GitHub Issues: [Issues](https://github.com/alicankiraz1/seneca-trbench/issues)
+- Pull Requests: [PRs](https://github.com/alicankiraz1/seneca-trbench/pulls)
 
 ---
 

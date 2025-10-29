@@ -1,4 +1,4 @@
-# Release Notes - Turkish LLM Benchmark System
+# Release Notes - Seneca-TRBench
 
 ## Version 1.0.0 (Initial Release)
 
@@ -99,5 +99,5 @@
 
 ---
 
-For detailed changelog and updates, see [GitHub Releases](https://github.com/yourusername/turkish-benchmark/releases)
+For detailed changelog and updates, see [GitHub Releases](https://github.com/alicankiraz1/seneca-trbench/releases)
 

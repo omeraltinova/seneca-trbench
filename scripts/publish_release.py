@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Release publisher script for Turkish Benchmark System.
+Release publisher script for Seneca-TRBench.
 Copies whitelisted files to Github/ directory, excluding sensitive data.
 """
 
@@ -93,7 +93,7 @@ def copy_file_or_dir(src: Path, dst: Path):
 def main():
     """Main release publisher."""
     print("=" * 60)
-    print("Turkish Benchmark - Release Publisher")
+    print("Seneca-TRBench - Release Publisher")
     print("=" * 60)
     print()
     

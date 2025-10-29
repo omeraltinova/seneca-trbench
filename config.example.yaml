@@ -1,4 +1,4 @@
-# Turkish Benchmark Configuration
+# Seneca-TRBench Configuration
 # Copy this to config.yaml and set your API keys in .env file
 
 api_providers:
