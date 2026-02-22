@@ -6,6 +6,8 @@ Provides detailed analysis of SAQ test results with actionable insights.
 
 import json
 import argparse
+import subprocess
+import sys
 from pathlib import Path
 from typing import Dict, Any, List
 
@@ -186,9 +188,10 @@ def main():
         
         console.print("\n" + "="*100 + "\n")
         
-        # Use compare_results.py for comparison
-        import os
-        os.system(f"python compare_results.py --type saq")
+        # Use compare_results.py for comparison (independent from current working directory)
+        script_dir = Path(__file__).resolve().parent
+        compare_script = script_dir / "compare_results.py"
+        subprocess.run([sys.executable, str(compare_script), "--type", "saq"], check=False)
         
     elif args.file:
         # Analyze specific file
@@ -217,4 +220,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
