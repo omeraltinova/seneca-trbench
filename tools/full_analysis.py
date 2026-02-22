@@ -38,6 +38,7 @@ def main():
         
         mcq_table = Table(show_header=True, header_style="bold magenta")
         mcq_table.add_column("#", justify="right", width=3)
+        mcq_table.add_column("Provider", style="magenta", width=12)
         mcq_table.add_column("Model", style="cyan", width=25)
         mcq_table.add_column("Doğruluk", justify="right", style="yellow")
         mcq_table.add_column("Not", justify="center", style="bold")
@@ -48,7 +49,8 @@ def main():
                 with open(file_path, 'r', encoding='utf-8') as f:
                     data = json.load(f)
                 
-                model = data['metadata']['model']
+                model = data['metadata'].get('model_name') or data['metadata'].get('model', 'unknown')
+                provider = data['metadata'].get('provider', 'unknown')
                 accuracy = data['statistics']['accuracy']
                 grade = data['statistics'].get('grade', 'N/A')
                 timestamp = data['metadata']['timestamp']
@@ -59,6 +61,7 @@ def main():
                 
                 mcq_table.add_row(
                     str(i),
+                    provider,
                     model,
                     f"{accuracy:.2f}%",
                     f"[{grade_color}]{grade}[/{grade_color}]",
@@ -76,6 +79,7 @@ def main():
         
         saq_table = Table(show_header=True, header_style="bold magenta")
         saq_table.add_column("#", justify="right", width=3)
+        saq_table.add_column("Provider", style="magenta", width=12)
         saq_table.add_column("Model", style="cyan", width=25)
         saq_table.add_column("Ort. Puan", justify="right", style="yellow")
         saq_table.add_column("Not", justify="center", style="bold")
@@ -88,6 +92,7 @@ def main():
                     data = json.load(f)
                 
                 model = data['metadata']['model']
+                provider = data['metadata'].get('provider', 'unknown')
                 avg_score = data['statistics']['average_score']
                 grade = data['statistics'].get('grade', 'N/A')
                 timestamp = data['metadata']['timestamp']
@@ -104,6 +109,7 @@ def main():
                 
                 saq_table.add_row(
                     str(i),
+                    provider,
                     model,
                     f"{avg_score:.2f}/100",
                     f"[{grade_color}]{grade}[/{grade_color}]",
@@ -130,7 +136,7 @@ def main():
                     accuracy = data['statistics']['accuracy']
                     if accuracy > best_mcq_score:
                         best_mcq_score = accuracy
-                        best_mcq = data['metadata']['model']
+                        best_mcq = data['metadata'].get('model_name') or data['metadata'].get('model', 'unknown')
             
             console.print(f"  🏆 MCQ için en iyi model: [bold green]{best_mcq}[/bold green] ({best_mcq_score:.2f}%)")
         
@@ -144,7 +150,7 @@ def main():
                     avg_score = data['statistics']['average_score']
                     if avg_score > best_saq_score:
                         best_saq_score = avg_score
-                        best_saq = data['metadata']['model']
+                        best_saq = data['metadata'].get('model_name') or data['metadata'].get('model', 'unknown')
             
             console.print(f"  🏆 SAQ için en iyi model: [bold green]{best_saq}[/bold green] ({best_saq_score:.2f}/100)")
         

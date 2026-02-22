@@ -6,9 +6,15 @@ Use this when test completed but scoring failed.
 
 import json
 import argparse
+import sys
 from pathlib import Path
 from dataclasses import dataclass, asdict
 from typing import List, Optional
+
+# Ensure project root is in sys.path (so 'from src...' works from any directory)
+_project_root = str(Path(__file__).resolve().parent.parent)
+if _project_root not in sys.path:
+    sys.path.insert(0, _project_root)
 
 from src.judge import Judge
 from src.reporter import Reporter
@@ -20,12 +26,14 @@ from rich.panel import Panel
 console = Console()
 
 
-def load_intermediate_results(file_path: Path) -> tuple[List[TestResult], str]:
+def load_intermediate_results(file_path: Path) -> tuple[List[TestResult], str, dict]:
     """
-    Load intermediate test results from JSON file.
+    Load test results from JSON file.
+    Supports both intermediate (flat list) and final result (dict with 'results' key) formats.
     
     Returns:
-        Tuple of (results, test_type)
+        Tuple of (results, test_type, source_metadata)
+        source_metadata contains 'provider' and 'model' from the original file if available.
     """
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
@@ -37,12 +45,32 @@ def load_intermediate_results(file_path: Path) -> tuple[List[TestResult], str]:
         elif '_saq_' in file_path.name:
             test_type = 'saq'
         else:
-            # Try to infer from data
             test_type = 'mcq'  # default
+        
+        # Extract source metadata
+        source_metadata = {'provider': 'unknown', 'model': 'unknown'}
+        
+        # Handle both formats:
+        # 1. Final result format: {"metadata": {...}, "statistics": {...}, "results": [...]}
+        # 2. Intermediate format: [{...}, {...}, ...]
+        if isinstance(data, dict) and 'results' in data:
+            items = data['results']
+            metadata = data.get('metadata', {})
+            # Override test_type from metadata if available
+            test_type = metadata.get('test_type', test_type)
+            # Extract original provider and model
+            source_metadata['provider'] = metadata.get('provider', 'unknown')
+            source_metadata['model'] = metadata.get('model_name') or metadata.get('model', 'unknown')
+        elif isinstance(data, list):
+            items = data
+        else:
+            raise ValueError(f"Beklenmeyen dosya formatı: {type(data)}")
         
         # Convert to TestResult objects
         results = []
-        for item in data:
+        for item in items:
+            if isinstance(item, str):
+                continue  # Skip non-dict entries
             result = TestResult(
                 question_id=item.get('question_id', 0),
                 category=item.get('category', ''),
@@ -56,7 +84,7 @@ def load_intermediate_results(file_path: Path) -> tuple[List[TestResult], str]:
             )
             results.append(result)
         
-        return results, test_type
+        return results, test_type, source_metadata
         
     except Exception as e:
         console.print(f"[red]Dosya okuma hatası: {str(e)}[/red]")
@@ -102,19 +130,18 @@ def rescore_results(file_path: Path, config: dict, model_name: str = None):
     console.print(f"\n[yellow]Dosya yükleniyor:[/yellow] {file_path.name}\n")
     
     # Load results
-    results, test_type = load_intermediate_results(file_path)
+    results, test_type, source_metadata = load_intermediate_results(file_path)
     
     console.print(f"[green]✓[/green] {len(results)} sonuç yüklendi")
-    console.print(f"[green]✓[/green] Test tipi: {test_type.upper()}\n")
+    console.print(f"[green]✓[/green] Test tipi: {test_type.upper()}")
+    console.print(f"[green]✓[/green] Orijinal provider: {source_metadata['provider']}")
+    console.print(f"[green]✓[/green] Orijinal model: {source_metadata['model']}\n")
     
-    # Infer model name from filename if not provided
+    # Use original model name if not overridden by --model arg
     if not model_name:
-        # Extract from filename: model_testtype_timestamp.json
-        parts = file_path.stem.split('_')
-        if len(parts) >= 2:
-            model_name = parts[0]
-        else:
-            model_name = "unknown"
+        model_name = source_metadata['model']
+    
+    provider = source_metadata['provider']
     
     # Check if already scored
     already_scored = sum(1 for r in results if r.score is not None)
@@ -128,7 +155,9 @@ def rescore_results(file_path: Path, config: dict, model_name: str = None):
     logger = setup_logger()
     
     # Score results
-    console.print(f"[bold yellow]Puanlama başlatılıyor (GPT-4o ile)...[/bold yellow]\n")
+    judge_provider = config.get('judge', {}).get('provider', '') or 'openai'
+    judge_model = config.get('judge', {}).get('model', '') or 'gpt-4o'
+    console.print(f"[bold yellow]Puanlama başlatılıyor ({judge_provider}/{judge_model} ile)...[/bold yellow]\n")
     
     judge = Judge(config, logger)
     scored_results = judge.score_results(results, test_type)
@@ -140,7 +169,7 @@ def rescore_results(file_path: Path, config: dict, model_name: str = None):
     console.print(f"[yellow]Rapor oluşturuluyor...[/yellow]\n")
     
     reporter = Reporter(config)
-    report = reporter.generate_report(scored_results, test_type, model_name)
+    report = reporter.generate_report(scored_results, test_type, model_name, provider=provider)
     
     # Show report paths
     if report['report_paths']:

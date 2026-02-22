@@ -22,7 +22,7 @@ def analyze_saq_file(file_path: Path):
     with open(file_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
     
-    model_name = data['metadata']['model']
+    model_name = data['metadata'].get('model_name') or data['metadata'].get('model', 'unknown')
     stats = data['statistics']
     
     console.print(Panel.fit(
@@ -134,7 +134,7 @@ def analyze_saq_file(file_path: Path):
         console.print(f"  🚨 [bold red]{len(critical)} kritik kategori tespit edildi - Halüsinasyon riski![/bold red]")
     
     if len(weak) + len(critical) > len(excellent):
-        console.print(f"  💡 Daha güçlü bir model (GPT-4, Claude-3-Opus) deneyin")
+        console.print(f"  💡 Daha güçlü bir model deneyin (ör: GPT-4o, Claude Sonnet, Gemini Pro)")
     
     console.print()
 
@@ -206,7 +206,8 @@ def main():
         if not saq_files:
             console.print("[red]SAQ sonuç dosyası bulunamadı![/red]")
             console.print("Önce SAQ testi çalıştırın:")
-            console.print("  python benchmark.py --provider openai --model gpt-3.5-turbo --test-type saq")
+            console.print("  python benchmark.py --provider <provider> --model <model> --test-type saq")
+            console.print("  Örnek: python benchmark.py --provider openrouter --model openai/gpt-4o --test-type saq")
             return
         
         latest_file = saq_files[0]
