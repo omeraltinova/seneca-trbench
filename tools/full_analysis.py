@@ -91,7 +91,7 @@ def main():
                 with open(file_path, 'r', encoding='utf-8') as f:
                     data = json.load(f)
                 
-                model = data['metadata']['model']
+                model = data['metadata'].get('model_name') or data['metadata'].get('model', 'unknown')
                 provider = data['metadata'].get('provider', 'unknown')
                 avg_score = data['statistics']['average_score']
                 grade = data['statistics'].get('grade', 'N/A')
