@@ -6,6 +6,13 @@ from pathlib import Path
 from typing import Dict, Any
 import re
 
+# Load .env file if python-dotenv is available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 
 def _resolve_env_vars(config: Any) -> Any:
     """Recursively resolve environment variables in config."""

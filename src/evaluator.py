@@ -158,7 +158,7 @@ Cevap:"""
                     prompt,
                     # GPT-5 modellerinde sadece 1 destekleniyor; model wrapper bunu güvenli 1'e çevirir
                     temperature=0.3,
-                    max_tokens=512,
+                    max_tokens=5120,
                     timeout=self.config.get('test_settings', {}).get('timeout_seconds', 60),
                 )
                 response_time = time.time() - start_time

@@ -13,7 +13,7 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.progress import Progress, SpinnerColumn, TextColumn
 
-from src.models import OpenAIModel, AnthropicModel, TogetherModel, HuggingFaceModel, GeminiModel
+from src.models import create_model, PROVIDER_MAP
 from src.evaluator import Evaluator
 from src.judge import Judge
 from src.reporter import Reporter
@@ -22,31 +22,8 @@ from src.utils import load_config, setup_logger
 
 console = Console()
 
-
-def create_model(provider: str, model_name: str, config: dict):
-    """
-    Create model instance based on provider.
-    
-    Args:
-        provider: Provider name (openai, anthropic, together, huggingface)
-        model_name: Model identifier
-        config: Configuration dictionary
-        
-    Returns:
-        Model instance
-    """
-    provider_map = {
-        'openai': OpenAIModel,
-        'anthropic': AnthropicModel,
-        'together': TogetherModel,
-        'huggingface': HuggingFaceModel,
-        'gemini': GeminiModel,
-    }
-    
-    if provider not in provider_map:
-        raise ValueError(f"Desteklenmeyen provider: {provider}")
-    
-    return provider_map[provider](model_name, config)
+# All supported provider names (for CLI choices)
+SUPPORTED_PROVIDERS = sorted(PROVIDER_MAP.keys())
 
 
 def run_benchmark(
@@ -54,7 +31,9 @@ def run_benchmark(
     model_name: str,
     test_type: str,
     config_path: str,
-    resume: bool = False
+    resume: bool = False,
+    judge_provider: Optional[str] = None,
+    judge_model: Optional[str] = None,
 ):
     """
     Run benchmark on specified model.
@@ -65,21 +44,31 @@ def run_benchmark(
         test_type: 'mcq', 'saq', or 'all'
         config_path: Path to config file
         resume: Resume from interrupted test
+        judge_provider: Override judge provider from config
+        judge_model: Override judge model from config
     """
     # Load configuration
     console.print("[bold blue]Konfigürasyon yükleniyor...[/bold blue]")
     config = load_config(config_path)
+    
+    # Override judge settings from CLI if provided
+    if judge_provider:
+        config['judge']['provider'] = judge_provider
+    if judge_model:
+        config['judge']['model'] = judge_model
     
     # Setup logger
     logger = setup_logger(log_dir=config['paths']['logs_dir'])
     logger.info(f"Benchmark başlatılıyor: {provider}/{model_name}")
     
     # Display banner
+    judge_info = f"{config['judge'].get('provider', 'openai')}/{config['judge']['model']}"
     console.print(Panel.fit(
         f"[bold green]TÜRKÇE DİL BENCHMARK SİSTEMİ[/bold green]\n\n"
         f"Provider: {provider}\n"
         f"Model: {model_name}\n"
-        f"Test Tipi: {test_type}",
+        f"Test Tipi: {test_type}\n"
+        f"Judge: {judge_info}",
         border_style="green"
     ))
     
@@ -135,7 +124,8 @@ def run_benchmark(
             console.print(f"\n[bold green]✓[/bold green] Test tamamlandı: {len(results)} soru\n")
             
             # Score results
-            console.print(f"[bold yellow]Puanlama yapılıyor (GPT-4o ile)...[/bold yellow]\n")
+            judge_display = f"{config['judge'].get('provider', 'openai')}/{config['judge']['model']}"
+            console.print(f"[bold yellow]Puanlama yapılıyor ({judge_display} ile)...[/bold yellow]\n")
             judge = Judge(config, logger)
             scored_results = judge.score_results(results, current_test)
             judge.cleanup()
@@ -163,6 +153,7 @@ def run_benchmark(
         console.print(Panel.fit(
             "[bold green]BENCHMARK BAŞARIYLA TAMAMLANDI[/bold green]\n\n"
             f"Test Edilen Model: {model_name}\n"
+            f"Judge Model: {judge_display}\n"
             f"Tamamlanan Testler: {', '.join(tests_to_run)}\n"
             f"Sonuçlar: {config['paths']['results_dir']}",
             border_style="green"
@@ -195,14 +186,20 @@ def main():
   # OpenAI GPT-4 ile tüm testleri çalıştır
   python benchmark.py --provider openai --model gpt-4 --test-type all
   
-  # Anthropic Claude ile sadece MCQ testi
-  python benchmark.py --provider anthropic --model claude-3-opus-20240229 --test-type mcq
+  # Ollama ile lokal model test et
+  python benchmark.py --provider ollama --model llama3 --test-type mcq
   
-  # HuggingFace modelini yerel olarak test et
-  python benchmark.py --provider huggingface --model meta-llama/Llama-3-8B --test-type all
+  # LM Studio ile test et
+  python benchmark.py --provider lmstudio --model loaded-model --test-type mcq
   
-  # Together.ai modeli ile test
-  python benchmark.py --provider together --model meta-llama/Llama-3-70b-chat-hf --test-type saq
+  # OpenRouter ile test et
+  python benchmark.py --provider openrouter --model anthropic/claude-3.5-sonnet --test-type saq
+  
+  # Judge modelini değiştirerek test et
+  python benchmark.py --provider openai --model gpt-4 --judge-provider ollama --judge-model llama3
+  
+  # Judge olarak OpenRouter kullan
+  python benchmark.py --provider ollama --model llama3 --judge-provider openrouter --judge-model openai/gpt-4o
         """
     )
     
@@ -210,15 +207,15 @@ def main():
         '--provider',
         type=str,
         required=True,
-        choices=['openai', 'anthropic', 'together', 'huggingface', 'gemini'],
-        help='Model sağlayıcı'
+        choices=SUPPORTED_PROVIDERS,
+        help='Test modeli sağlayıcı'
     )
     
     parser.add_argument(
         '--model',
         type=str,
         required=True,
-        help='Model adı/kimliği'
+        help='Test modeli adı/kimliği'
     )
     
     parser.add_argument(
@@ -242,6 +239,22 @@ def main():
         help='Kesilen testten devam et'
     )
     
+    # Judge override arguments
+    parser.add_argument(
+        '--judge-provider',
+        type=str,
+        choices=SUPPORTED_PROVIDERS,
+        default=None,
+        help='Judge (puanlama) modeli sağlayıcı (config.yaml\'daki varsayılanı geçersiz kılar)'
+    )
+    
+    parser.add_argument(
+        '--judge-model',
+        type=str,
+        default=None,
+        help='Judge (puanlama) modeli adı (config.yaml\'daki varsayılanı geçersiz kılar)'
+    )
+    
     args = parser.parse_args()
     
     # Run benchmark
@@ -250,10 +263,11 @@ def main():
         model_name=args.model,
         test_type=args.test_type,
         config_path=args.config,
-        resume=args.resume
+        resume=args.resume,
+        judge_provider=args.judge_provider,
+        judge_model=args.judge_model,
     )
 
 
 if __name__ == '__main__':
     main()
-

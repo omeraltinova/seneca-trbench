@@ -48,6 +48,9 @@ venv.bak/
 .env.local
 *.env
 
+# Config (contains API keys)
+config.yaml
+
 # macOS
 .DS_Store
 .AppleDouble

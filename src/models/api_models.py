@@ -415,3 +415,183 @@ class GeminiModel(BaseModel):
     
     def cleanup(self) -> None:
         self._is_ready = False
+
+
+class OpenRouterModel(BaseModel):
+    """OpenRouter API model wrapper (OpenAI-compatible)."""
+    
+    def __init__(self, model_name: str, config: Dict[str, Any]):
+        super().__init__(model_name, config)
+        or_cfg = config.get('api_providers', {}).get('openrouter', {})
+        self.api_key = or_cfg.get('api_key')
+        self.base_url = or_cfg.get('base_url', 'https://openrouter.ai/api/v1')
+        self.site_url = or_cfg.get('site_url', '')
+        self.site_name = or_cfg.get('site_name', 'Seneca-TRBench')
+        self.client = None
+        
+        if not self.api_key:
+            raise ValueError("OpenRouter API key not found in config or environment. Set OPENROUTER_API_KEY.")
+    
+    def setup(self) -> None:
+        """Initialize OpenRouter client via OpenAI SDK."""
+        try:
+            from openai import OpenAI
+            self.client = OpenAI(
+                api_key=self.api_key,
+                base_url=self.base_url,
+                default_headers={
+                    "HTTP-Referer": self.site_url,
+                    "X-Title": self.site_name,
+                }
+            )
+            self._is_ready = True
+        except ImportError:
+            raise ImportError("openai package is required for OpenRouter. Install with: pip install openai")
+    
+    @retry(
+        stop=stop_after_attempt(3),
+        wait=wait_exponential(multiplier=1, min=2, max=10),
+        retry=retry_if_exception_type((Exception,)),
+        reraise=True,
+    )
+    def generate(self, prompt: str, temperature: float = 0.7, max_tokens: int = 1024, **kwargs) -> str:
+        """Generate text using OpenRouter API."""
+        if not self._is_ready:
+            self.setup()
+        
+        try:
+            timeout_s = self.config.get('test_settings', {}).get('timeout_seconds', 60)
+            timeout_s = kwargs.pop('timeout', timeout_s)
+            response = self.client.chat.completions.create(
+                model=self.model_name,
+                messages=[{"role": "user", "content": prompt}],
+                temperature=temperature,
+                max_tokens=max_tokens,
+                timeout=timeout_s,
+                **kwargs
+            )
+            return response.choices[0].message.content.strip()
+        except Exception as e:
+            raise Exception(f"OpenRouter API error ({self.model_name}): {str(e)}")
+    
+    def cleanup(self) -> None:
+        self.client = None
+        self._is_ready = False
+
+
+class OllamaModel(BaseModel):
+    """Ollama API model wrapper (OpenAI-compatible)."""
+    
+    def __init__(self, model_name: str, config: Dict[str, Any]):
+        super().__init__(model_name, config)
+        ol_cfg = config.get('api_providers', {}).get('ollama', {})
+        self.api_key = ol_cfg.get('api_key', 'ollama')  # Ollama doesn't need a real key
+        self.base_url = ol_cfg.get('base_url', 'http://localhost:11434/v1')
+        self.client = None
+    
+    def setup(self) -> None:
+        """Initialize Ollama client via OpenAI SDK."""
+        try:
+            from openai import OpenAI
+            self.client = OpenAI(
+                api_key=self.api_key,
+                base_url=self.base_url,
+            )
+            self._is_ready = True
+        except ImportError:
+            raise ImportError("openai package is required for Ollama. Install with: pip install openai")
+    
+    @retry(
+        stop=stop_after_attempt(2),
+        wait=wait_exponential(multiplier=1, min=1, max=5),
+        retry=retry_if_exception_type((Exception,)),
+        reraise=True,
+    )
+    def generate(self, prompt: str, temperature: float = 0.7, max_tokens: int = 1024, **kwargs) -> str:
+        """Generate text using Ollama API."""
+        if not self._is_ready:
+            self.setup()
+        
+        try:
+            timeout_s = self.config.get('test_settings', {}).get('timeout_seconds', 120)
+            timeout_s = kwargs.pop('timeout', timeout_s)
+            response = self.client.chat.completions.create(
+                model=self.model_name,
+                messages=[{"role": "user", "content": prompt}],
+                temperature=temperature,
+                max_tokens=max_tokens,
+                timeout=timeout_s,
+                **kwargs
+            )
+            return response.choices[0].message.content.strip()
+        except Exception as e:
+            error_msg = str(e)
+            if "connection" in error_msg.lower() or "refused" in error_msg.lower():
+                raise Exception(
+                    f"Ollama'ya bağlanılamadı ({self.base_url}). "
+                    f"Ollama'nın çalıştığından emin olun: 'ollama serve'"
+                )
+            raise Exception(f"Ollama API error ({self.model_name}): {error_msg}")
+    
+    def cleanup(self) -> None:
+        self.client = None
+        self._is_ready = False
+
+
+class LMStudioModel(BaseModel):
+    """LM Studio API model wrapper (OpenAI-compatible)."""
+    
+    def __init__(self, model_name: str, config: Dict[str, Any]):
+        super().__init__(model_name, config)
+        lm_cfg = config.get('api_providers', {}).get('lmstudio', {})
+        self.api_key = lm_cfg.get('api_key', 'lm-studio')  # LM Studio doesn't need a real key
+        self.base_url = lm_cfg.get('base_url', 'http://localhost:1234/v1')
+        self.client = None
+    
+    def setup(self) -> None:
+        """Initialize LM Studio client via OpenAI SDK."""
+        try:
+            from openai import OpenAI
+            self.client = OpenAI(
+                api_key=self.api_key,
+                base_url=self.base_url,
+            )
+            self._is_ready = True
+        except ImportError:
+            raise ImportError("openai package is required for LM Studio. Install with: pip install openai")
+    
+    @retry(
+        stop=stop_after_attempt(2),
+        wait=wait_exponential(multiplier=1, min=1, max=5),
+        retry=retry_if_exception_type((Exception,)),
+        reraise=True,
+    )
+    def generate(self, prompt: str, temperature: float = 0.7, max_tokens: int = 1024, **kwargs) -> str:
+        """Generate text using LM Studio API."""
+        if not self._is_ready:
+            self.setup()
+        
+        try:
+            timeout_s = self.config.get('test_settings', {}).get('timeout_seconds', 120)
+            timeout_s = kwargs.pop('timeout', timeout_s)
+            response = self.client.chat.completions.create(
+                model=self.model_name,
+                messages=[{"role": "user", "content": prompt}],
+                temperature=temperature,
+                max_tokens=max_tokens,
+                timeout=timeout_s,
+                **kwargs
+            )
+            return response.choices[0].message.content.strip()
+        except Exception as e:
+            error_msg = str(e)
+            if "connection" in error_msg.lower() or "refused" in error_msg.lower():
+                raise Exception(
+                    f"LM Studio'ya bağlanılamadı ({self.base_url}). "
+                    f"LM Studio'nun çalıştığından ve Local Server'ın aktif olduğundan emin olun."
+                )
+            raise Exception(f"LM Studio API error ({self.model_name}): {error_msg}")
+    
+    def cleanup(self) -> None:
+        self.client = None
+        self._is_ready = False

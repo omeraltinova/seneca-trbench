@@ -16,6 +16,9 @@
 - 🟣 **Anthropic** (Claude 4.5, Claude 4.1, Claude 3)
 - 🟢 **Together.ai** (Llama, Kimi-K2, Gemma, DeepSeek, Qwen)
 - 🔴 **Google Gemini** (Gemini 2.5 Pro, Flash, Lite)
+- 🟠 **OpenRouter** (Tüm modellere tek API ile erişim)
+- 🦙 **Ollama** (Lokal modeller — llama3, mistral, gemma2, vb.)
+- 💻 **LM Studio** (Lokal modeller — GUI ile model yönetimi)
 - 🤗 **HuggingFace** (Lokal modeller, Transformers - Mac uyumlu)
 
 ## 🎯 Özellikler
@@ -31,7 +34,8 @@
   - HuggingFace modelleri (vLLM ile lokal çalıştırma)
 
 - **Otomatik Puanlama:**
-  - GPT-4o ile objektif değerlendirme
+  - Seçilebilir judge modeli ile objektif değerlendirme (varsayılan: GPT-4o)
+  - Judge provider ve modeli .env veya CLI'den değiştirilebilir
   - MCQ için 0/100 puanlama
   - SAQ için 0-100 arası detaylı puanlama (Doğruluk, İçerik, Dil Kalitesi)
 
@@ -64,7 +68,14 @@ Kullanmak istediğiniz provider'lar için API anahtarlarını environment variab
 export OPENAI_API_KEY="your-openai-api-key"
 export ANTHROPIC_API_KEY="your-anthropic-api-key"
 export TOGETHER_API_KEY="your-together-api-key"
+export OPENROUTER_API_KEY="your-openrouter-api-key"
+
+# Judge modeli ayarları (opsiyonel, varsayılan: openai/gpt-4o)
+export JUDGE_PROVIDER="openai"
+export JUDGE_MODEL="gpt-4o"
 ```
+
+> **Not:** Ollama ve LM Studio lokal çalıştığı için API key gerektirmez.
 
 ## 🚀 Hızlı Başlangıç
 
@@ -80,13 +91,43 @@ python3 benchmark.py --provider openai --model gpt-5-mini --test-type mcq
 python3 benchmark.py --provider anthropic --model claude-sonnet-4-5-20250929 --test-type mcq
 ```
 
-### 3. Karşılaştırmalı Test (Hızlı Başlangıç)
+### 3. Ollama ile Lokal Test
+
+```bash
+# Önce modeli indirin: ollama pull llama3
+python3 benchmark.py --provider ollama --model llama3 --test-type mcq
+```
+
+### 4. LM Studio ile Lokal Test
+
+```bash
+# LM Studio'da modeli yükleyin ve Local Server'ı başlatın
+python3 benchmark.py --provider lmstudio --model loaded-model --test-type mcq
+```
+
+### 5. OpenRouter ile Test
+
+```bash
+python3 benchmark.py --provider openrouter --model anthropic/claude-3.5-sonnet --test-type mcq
+```
+
+### 6. Judge Modelini Değiştirerek Test
+
+```bash
+# Ollama ile test et, judge olarak OpenRouter kullan
+python3 benchmark.py --provider ollama --model llama3 --judge-provider openrouter --judge-model openai/gpt-4o
+
+# OpenAI ile test et, judge olarak Ollama kullan
+python3 benchmark.py --provider openai --model gpt-4 --judge-provider ollama --judge-model llama3
+```
+
+### 7. Karşılaştırmalı Test
 
 ```bash
 python3 run_claude_comparison.py
 ```
 
-### 4. HuggingFace Modeli (Lokal - Transformers)
+### 8. HuggingFace Modeli (Lokal - Transformers)
 
 ```bash
 python3 benchmark.py --provider huggingface --model meta-llama/Llama-3-8B --test-type mcq
@@ -204,6 +245,7 @@ python3 benchmark.py --provider huggingface --model meta-llama/Llama-3-8B --test
 ### JSON Rapor
 
 Detaylı JSON raporları şunları içerir:
+
 - Her soru için model cevabı
 - Judge değerlendirmesi ve puanı
 - Yanıt süreleri
@@ -215,11 +257,14 @@ Detaylı JSON raporları şunları içerir:
 `config.yaml` dosyasını düzenleyerek ayarları özelleştirebilirsiniz:
 
 ```yaml
-# Judge model ayarları
+# Judge (puanlama) model ayarları
+# provider: openai, anthropic, together, gemini, openrouter, ollama, lmstudio
 judge:
-  model: "gpt-4o"
+  provider: "openai" # Judge provider — istediğiniz provider'ı seçin
+  model: "gpt-4o" # Judge model adı
   temperature: 0.1
-  max_tokens: 1000
+  max_tokens: 300
+  parallel_workers: 10
 
 # Test ayarları
 test_settings:
@@ -234,6 +279,31 @@ local:
   gpu_memory_utilization: 0.9
   max_model_len: 4096
 ```
+
+### Judge Ayarları
+
+Judge modeli 3 yöntemle ayarlanabilir (öncelik sırası: CLI > .env > config.yaml):
+
+1. **config.yaml** — Varsayılan ayar:
+
+   ```yaml
+   judge:
+     provider: "ollama"
+     model: "llama3"
+   ```
+
+2. **.env dosyası** — Environment variable olarak:
+
+   ```bash
+   JUDGE_PROVIDER=openrouter
+   JUDGE_MODEL=openai/gpt-4o
+   ```
+
+3. **CLI argümanları** — En yüksek öncelik:
+   ```bash
+   python3 benchmark.py --provider openai --model gpt-4 \
+     --judge-provider ollama --judge-model llama3
+   ```
 
 ## 📊 Sonuç Karşılaştırma
 
@@ -254,6 +324,7 @@ python3 compare_results.py results/gpt-3.5_mcq_*.json results/gpt-4_mcq_*.json
 ```
 
 **Özellikler**:
+
 - MCQ ve SAQ için ayrı tablolar
 - Kategori bazlı detaylı karşılaştırma
 - Renkli performans göstergeleri
@@ -300,11 +371,12 @@ Turkish-Benchmark/
 ├── src/                         # Kaynak kodlar
 │   ├── __init__.py
 │   ├── evaluator.py             # Test yürütücü
-│   ├── judge.py                 # Puanlama sistemi
+│   ├── judge.py                 # Puanlama sistemi (esnek provider desteği)
 │   ├── reporter.py              # Rapor oluşturucu
 │   ├── models/                  # Model wrapper'ları
+│   │   ├── __init__.py          # Model factory ve provider map
 │   │   ├── base_model.py        # Base sınıf
-│   │   ├── api_models.py        # API modelleri (OpenAI, Claude, Gemini, Together)
+│   │   ├── api_models.py        # API modelleri (OpenAI, Claude, Gemini, Together, OpenRouter, Ollama, LM Studio)
 │   │   └── local_models.py      # Lokal modeller (HuggingFace/Transformers)
 │   └── utils/                   # Yardımcı modüller
 │       ├── config_loader.py     # Config yükleyici
@@ -349,16 +421,16 @@ Turkish-Benchmark/
 
 ## 🛠️ Temel Araçlar
 
-| Araç | Kullanım | Süre |
-|------|----------|------|
-| `benchmark.py` | Ana test scripti | 10-60 dk |
-| `examples/run_claude_comparison.py` | Claude karşılaştırma | 25 dk |
-| `examples/run_gpt5_comparison.py` | GPT-5 karşılaştırma | 20 dk |
-| `tools/compare_results.py` | Sonuç karşılaştırma | Hızlı |
-| `tools/model_registry.py` | Model kayıtları | Hızlı |
-| `tools/analyze_saq.py` | SAQ detaylı analiz | Hızlı |
-| `tools/rescore.py` | Yeniden puanlama | 2-5 dk |
-| `tools/full_analysis.py` | Genel analiz | Hızlı |
+| Araç                                | Kullanım             | Süre     |
+| ----------------------------------- | -------------------- | -------- |
+| `benchmark.py`                      | Ana test scripti     | 10-60 dk |
+| `examples/run_claude_comparison.py` | Claude karşılaştırma | 25 dk    |
+| `examples/run_gpt5_comparison.py`   | GPT-5 karşılaştırma  | 20 dk    |
+| `tools/compare_results.py`          | Sonuç karşılaştırma  | Hızlı    |
+| `tools/model_registry.py`           | Model kayıtları      | Hızlı    |
+| `tools/analyze_saq.py`              | SAQ detaylı analiz   | Hızlı    |
+| `tools/rescore.py`                  | Yeniden puanlama     | 2-5 dk   |
+| `tools/full_analysis.py`            | Genel analiz         | Hızlı    |
 
 ## 🎯 İlk Adımınız
 
@@ -405,4 +477,3 @@ MIT License - Detaylar için `LICENSE` dosyasına bakın.
 ---
 
 **Not:** Bu benchmark Türkçe dilinin karmaşıklıklarını test eder. Sonuçlar modellerin genel Türkçe yeteneklerini yansıtır.
-

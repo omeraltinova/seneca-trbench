@@ -1,17 +1,17 @@
-"""Automated judging system using GPT-4o."""
+"""Automated judging system using configurable LLM provider."""
 
 import re
 from typing import Dict, List, Any, Tuple
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-from src.models.api_models import OpenAIModel
+from src.models import create_model
 from src.evaluator import TestResult
 from src.utils.logger import setup_logger
 
 
 class Judge:
-    """Automated judge using GPT-4o for scoring."""
+    """Automated judge using a configurable LLM for scoring."""
     
     def __init__(self, config: Dict[str, Any], logger=None):
         """
@@ -25,9 +25,13 @@ class Judge:
         self.logger = logger or setup_logger()
         
         judge_config = config['judge']
-        self.model = OpenAIModel(judge_config['model'], config)
+        judge_provider = judge_config.get('provider', '') or 'openai'
+        judge_model_name = judge_config.get('model', '') or 'gpt-4o'
+        
+        self.logger.info(f"Judge modeli: {judge_provider}/{judge_model_name}")
+        self.model = create_model(judge_provider, judge_model_name, config)
         self.temperature = judge_config['temperature']
-        self.max_tokens = judge_config.get('max_tokens', 300)
+        self.max_tokens = judge_config.get('max_tokens', 1500)
         self.parallel_workers = judge_config.get('parallel_workers', 10)
         
         # Setup model
@@ -186,4 +190,3 @@ GEREKÇE: [kısa açıklama]"""
         """Cleanup judge resources."""
         if self.model:
             self.model.cleanup()
-
