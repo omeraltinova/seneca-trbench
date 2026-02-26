@@ -11,6 +11,29 @@ from src.models.base_model import BaseModel
 from src.utils.logger import setup_logger
 
 
+# Tool definition for MCQ tool-call mode
+MCQ_TOOL_DEFINITION = [
+    {
+        "type": "function",
+        "function": {
+            "name": "submit_answer",
+            "description": "Çoktan seçmeli sorunun doğru cevap şıkkını gönder",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "answer": {
+                        "type": "string",
+                        "enum": ["A", "B", "C", "D"],
+                        "description": "Doğru cevap şıkkı (A, B, C veya D)",
+                    }
+                },
+                "required": ["answer"],
+            },
+        },
+    }
+]
+
+
 @dataclass
 class TestResult:
     """Container for test result."""
@@ -28,7 +51,7 @@ class TestResult:
 class Evaluator:
     """Evaluates model on MCQ and SAQ benchmarks."""
     
-    def __init__(self, config: Dict[str, Any], model: BaseModel, logger=None):
+    def __init__(self, config: Dict[str, Any], model: BaseModel, logger=None, mcq_type: str = 'ai'):
         """
         Initialize evaluator.
         
@@ -36,10 +59,12 @@ class Evaluator:
             config: Configuration dictionary
             model: Model instance to evaluate
             logger: Logger instance
+            mcq_type: MCQ scoring mode ('ai' for LLM judge, 'tool' for tool-call auto scoring)
         """
         self.config = config
         self.model = model
         self.logger = logger or setup_logger()
+        self.mcq_type = mcq_type
         
         self.mcq_path = config['paths']['mcq_data']
         self.saq_path = config['paths']['saq_data']
@@ -97,6 +122,23 @@ Soru:
 Cevap:"""
         return prompt
     
+    def create_mcq_tool_prompt(self, question_data: Dict[str, Any]) -> str:
+        """
+        Create prompt for MCQ question in tool-call mode.
+        
+        Args:
+            question_data: Question dictionary
+            
+        Returns:
+            Formatted prompt instructing the model to use submit_answer tool
+        """
+        question = question_data['Soru']
+        prompt = f"""Aşağıdaki Türkçe çoktan seçmeli soruyu analiz et ve doğru cevabı submit_answer fonksiyonunu kullanarak gönder.
+
+Soru:
+{question}"""
+        return prompt
+    
     def create_saq_prompt(self, question_data: Dict[str, Any]) -> str:
         """
         Create prompt for SAQ question.
@@ -144,6 +186,11 @@ Cevap:"""
         
         # Process questions
         prompt_func = self.create_mcq_prompt if test_type == 'mcq' else self.create_saq_prompt
+        use_tool_call = (test_type == 'mcq' and self.mcq_type == 'tool')
+        
+        if use_tool_call:
+            prompt_func = self.create_mcq_tool_prompt
+            self.logger.info("MCQ tool-call modu aktif: Model cevapları tool call ile alınacak")
         
         for idx in tqdm(range(start_idx, len(questions)), desc=f"{test_type.upper()} Test"):
             question_data = questions[idx]
@@ -154,13 +201,28 @@ Cevap:"""
                 
                 # Get model response
                 start_time = time.time()
-                model_answer = self.model.generate(
-                    prompt,
-                    # GPT-5 modellerinde sadece 1 destekleniyor; model wrapper bunu güvenli 1'e çevirir
-                    temperature=0.3,
-                    max_tokens=5120,
-                    timeout=self.config.get('test_settings', {}).get('timeout_seconds', 60),
-                )
+                
+                if use_tool_call:
+                    # Tool call mode: model calls submit_answer with the answer letter
+                    tool_result = self.model.generate_with_tools(
+                        prompt,
+                        tools=MCQ_TOOL_DEFINITION,
+                        tool_choice="required",
+                        temperature=0.3,
+                        max_tokens=1024,
+                        timeout=self.config.get('test_settings', {}).get('timeout_seconds', 60),
+                    )
+                    model_answer = tool_result['arguments'].get('answer', '')
+                else:
+                    # Standard text generation mode
+                    model_answer = self.model.generate(
+                        prompt,
+                        # GPT-5 modellerinde sadece 1 destekleniyor; model wrapper bunu güvenli 1'e çevirir
+                        temperature=0.3,
+                        max_tokens=10240,
+                        timeout=self.config.get('test_settings', {}).get('timeout_seconds', 60),
+                    )
+                
                 response_time = time.time() - start_time
                 
                 # Create result

@@ -1,7 +1,7 @@
 """Automated judging system using configurable LLM provider."""
 
 import re
-from typing import Dict, List, Any, Tuple
+from typing import Dict, List, Any, Tuple, Optional
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -13,29 +13,93 @@ from src.utils.logger import setup_logger
 class Judge:
     """Automated judge using a configurable LLM for scoring."""
     
-    def __init__(self, config: Dict[str, Any], logger=None):
+    def __init__(self, config: Dict[str, Any], logger=None, mcq_type: str = 'ai'):
         """
         Initialize judge.
         
         Args:
             config: Configuration dictionary
             logger: Logger instance
+            mcq_type: MCQ scoring mode ('ai' for LLM judge, 'tool' for auto scoring)
         """
         self.config = config
         self.logger = logger or setup_logger()
+        self.mcq_type = mcq_type
         
         judge_config = config['judge']
+        self.temperature = judge_config['temperature']
+        self.max_tokens = judge_config.get('max_tokens', 5000)
+        self.parallel_workers = judge_config.get('parallel_workers', 10)
+        
+        # Judge model is only needed when AI scoring is required
+        self.model = None
+        self._needs_ai_judge = False
+    
+    def _ensure_ai_judge(self) -> None:
+        """Lazily initialize the AI judge model when needed."""
+        if self.model is not None:
+            return
+        
+        judge_config = self.config['judge']
         judge_provider = judge_config.get('provider', '') or 'openai'
         judge_model_name = judge_config.get('model', '') or 'gpt-4o'
         
-        self.logger.info(f"Judge modeli: {judge_provider}/{judge_model_name}")
-        self.model = create_model(judge_provider, judge_model_name, config)
-        self.temperature = judge_config['temperature']
-        self.max_tokens = judge_config.get('max_tokens', 1500)
-        self.parallel_workers = judge_config.get('parallel_workers', 10)
-        
-        # Setup model
+        self.logger.info(f"Judge modeli başlatılıyor: {judge_provider}/{judge_model_name}")
+        self.model = create_model(judge_provider, judge_model_name, self.config)
         self.model.setup()
+    
+    @staticmethod
+    def _extract_expected_letter(expected_answer: str) -> Optional[str]:
+        """
+        Extract expected answer letter from various answer formats.
+        
+        Handles: "Doğru cevap: A", "Doğru: A", "A) Heyecan", etc.
+        
+        Args:
+            expected_answer: Raw expected answer string
+            
+        Returns:
+            Single letter (A/B/C/D) or None if extraction fails
+        """
+        answer = expected_answer.strip()
+        
+        # Son karakter A-D ise direkt al (130/131 soru)
+        if answer and answer[-1].upper() in 'ABCD':
+            return answer[-1].upper()
+        
+        # Fallback: başında "A)" formatı varsa (1 outlier)
+        match = re.match(r'([A-D])\)', answer)
+        if match:
+            return match.group(1)
+        
+        return None
+    
+    def score_mcq_auto(self, result: TestResult) -> Tuple[float, str]:
+        """
+        Score MCQ question automatically without LLM (0 or 100).
+        
+        Compares model's tool-call answer directly with expected answer letter.
+        
+        Args:
+            result: Test result to score
+            
+        Returns:
+            Tuple of (score, reasoning)
+        """
+        expected_letter = self._extract_expected_letter(result.expected_answer)
+        
+        if expected_letter is None:
+            self.logger.warning(
+                f"Soru {result.question_id}: Beklenen cevap harfi çıkarılamadı: '{result.expected_answer}'"
+            )
+            return 0.0, f"Otomatik doğrulama hatası: Beklenen cevap harfi çıkarılamadı ('{result.expected_answer}')"
+        
+        model_letter = result.model_answer.strip().upper()
+        
+        if model_letter == expected_letter:
+            return 100.0, f"Otomatik doğrulama: Doğru ({expected_letter})"
+        else:
+            return 0.0, f"Otomatik doğrulama: Yanlış (Beklenen: {expected_letter}, Model: {model_letter})"
     
     def score_mcq(self, result: TestResult) -> Tuple[float, str]:
         """
@@ -47,6 +111,7 @@ class Judge:
         Returns:
             Tuple of (score, reasoning)
         """
+        self._ensure_ai_judge()
         prompt = f"""Sen Türkçe dil testlerinde uzman bir değerlendiricisin. Aşağıdaki çoktan seçmeli soruya verilen cevabı değerlendir.
 
 Soru:
@@ -97,6 +162,7 @@ GEREKÇE: [Kısa açıklama]"""
         Returns:
             Tuple of (score, reasoning)
         """
+        self._ensure_ai_judge()
         prompt = f"""Türkçe test cevabını değerlendir.
 
 Soru: {result.question}
@@ -136,8 +202,12 @@ GEREKÇE: [kısa açıklama]"""
             result.score = 0.0
             result.judge_reasoning = f"Test hatası: {result.error}"
         else:
-            score_func = self.score_mcq if test_type == 'mcq' else self.score_saq
-            score, reasoning = score_func(result)
+            if test_type == 'mcq' and self.mcq_type == 'tool':
+                score, reasoning = self.score_mcq_auto(result)
+            elif test_type == 'mcq':
+                score, reasoning = self.score_mcq(result)
+            else:
+                score, reasoning = self.score_saq(result)
             result.score = score
             result.judge_reasoning = reasoning
         return result

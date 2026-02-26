@@ -1,10 +1,55 @@
 """API-based model implementations."""
 
+import json
 import time
-from typing import Dict, Any, Optional
+from typing import Dict, List, Any, Optional
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 
 from .base_model import BaseModel
+
+
+def _openai_tool_call(client, model_name: str, prompt: str, tools: List[Dict[str, Any]],
+                      tool_choice: str, temperature: float, max_tokens: int,
+                      timeout_s: int, **kwargs) -> Dict[str, Any]:
+    """
+    Shared tool-calling logic for all OpenAI-compatible providers.
+    
+    Args:
+        client: OpenAI-compatible client instance
+        model_name: Model identifier
+        prompt: Input prompt
+        tools: Tool definitions (OpenAI format)
+        tool_choice: Tool selection strategy
+        temperature: Sampling temperature
+        max_tokens: Max tokens
+        timeout_s: Timeout in seconds
+        
+    Returns:
+        Dict with 'tool_name' and 'arguments'
+    """
+    response = client.chat.completions.create(
+        model=model_name,
+        messages=[{"role": "user", "content": prompt}],
+        tools=tools,
+        tool_choice=tool_choice,
+        temperature=temperature,
+        max_tokens=max_tokens,
+        timeout=timeout_s,
+        **kwargs,
+    )
+    
+    message = response.choices[0].message
+    
+    if not message.tool_calls:
+        raise Exception("Model tool call yapmadı. Serbest metin cevabı döndü.")
+    
+    tool_call = message.tool_calls[0]
+    arguments = json.loads(tool_call.function.arguments)
+    
+    return {
+        'tool_name': tool_call.function.name,
+        'arguments': arguments,
+    }
 
 
 class OpenAIModel(BaseModel):
@@ -21,6 +66,10 @@ class OpenAIModel(BaseModel):
         
         if not self.api_key:
             raise ValueError("OpenAI API key not found in config or environment")
+    
+    @property
+    def supports_tool_calling(self) -> bool:
+        return True
 
     @staticmethod
     def _normalize_model_name(name: str) -> str:
@@ -154,6 +203,37 @@ class OpenAIModel(BaseModel):
         """Cleanup resources."""
         self.client = None
         self._is_ready = False
+    
+    def generate_with_tools(
+        self,
+        prompt: str,
+        tools: List[Dict[str, Any]],
+        tool_choice: str = "required",
+        temperature: float = 0.7,
+        max_tokens: int = 1024,
+        **kwargs,
+    ) -> Dict[str, Any]:
+        """Generate response with tool calling via OpenAI API."""
+        if not self._is_ready:
+            self.setup()
+        
+        timeout_s = self.config.get('test_settings', {}).get('timeout_seconds', 60)
+        timeout_s = kwargs.pop('timeout', timeout_s)
+        
+        try:
+            return _openai_tool_call(
+                client=self.client,
+                model_name=self.model_name,
+                prompt=prompt,
+                tools=tools,
+                tool_choice=tool_choice,
+                temperature=temperature,
+                max_tokens=max_tokens,
+                timeout_s=timeout_s,
+                **kwargs,
+            )
+        except Exception as e:
+            raise Exception(f"OpenAI tool call hatası ({self.model_name}): {str(e)}")
 
 
 class AnthropicModel(BaseModel):
@@ -166,6 +246,10 @@ class AnthropicModel(BaseModel):
         
         if not self.api_key:
             raise ValueError("Anthropic API key not found in config or environment")
+    
+    @property
+    def supports_tool_calling(self) -> bool:
+        return True
     
     def setup(self) -> None:
         """Initialize Anthropic client."""
@@ -203,6 +287,52 @@ class AnthropicModel(BaseModel):
         """Cleanup resources."""
         self.client = None
         self._is_ready = False
+    
+    def generate_with_tools(
+        self,
+        prompt: str,
+        tools: List[Dict[str, Any]],
+        tool_choice: str = "required",
+        temperature: float = 0.7,
+        max_tokens: int = 1024,
+        **kwargs,
+    ) -> Dict[str, Any]:
+        """Generate response with tool calling via Anthropic API."""
+        if not self._is_ready:
+            self.setup()
+        
+        # Anthropic tool format: convert from OpenAI format
+        anthropic_tools = []
+        for tool in tools:
+            func = tool.get('function', tool)
+            anthropic_tools.append({
+                'name': func['name'],
+                'description': func.get('description', ''),
+                'input_schema': func['parameters'],
+            })
+        
+        try:
+            response = self.client.messages.create(
+                model=self.model_name,
+                max_tokens=max_tokens,
+                temperature=temperature,
+                messages=[{"role": "user", "content": prompt}],
+                tools=anthropic_tools,
+                tool_choice={"type": "any"} if tool_choice == "required" else {"type": tool_choice},
+            )
+            
+            # Anthropic: tool_use content bloğundan çıkar
+            for block in response.content:
+                if block.type == 'tool_use':
+                    return {
+                        'tool_name': block.name,
+                        'arguments': block.input,
+                    }
+            
+            raise Exception("Model tool call yapmadı. Serbest metin cevabı döndü.")
+            
+        except Exception as e:
+            raise Exception(f"Anthropic tool call hatası ({self.model_name}): {str(e)}")
 
 
 class TogetherModel(BaseModel):
@@ -216,6 +346,10 @@ class TogetherModel(BaseModel):
         
         if not self.api_key:
             raise ValueError("Together API key not found in config or environment")
+    
+    @property
+    def supports_tool_calling(self) -> bool:
+        return True
     
     def setup(self) -> None:
         """Initialize Together client."""
@@ -328,6 +462,37 @@ class TogetherModel(BaseModel):
         """Cleanup resources."""
         self.client = None
         self._is_ready = False
+    
+    def generate_with_tools(
+        self,
+        prompt: str,
+        tools: List[Dict[str, Any]],
+        tool_choice: str = "required",
+        temperature: float = 0.7,
+        max_tokens: int = 1024,
+        **kwargs,
+    ) -> Dict[str, Any]:
+        """Generate response with tool calling via Together API."""
+        if not self._is_ready:
+            self.setup()
+        
+        timeout_s = self.config.get('test_settings', {}).get('timeout_seconds', 60)
+        timeout_s = kwargs.pop('timeout', timeout_s)
+        
+        try:
+            return _openai_tool_call(
+                client=self.client,
+                model_name=self.model_name,
+                prompt=prompt,
+                tools=tools,
+                tool_choice=tool_choice,
+                temperature=temperature,
+                max_tokens=max_tokens,
+                timeout_s=timeout_s,
+                **kwargs,
+            )
+        except Exception as e:
+            raise Exception(f"Together tool call hatası ({self.model_name}): {str(e)}")
 
 
 class GeminiModel(BaseModel):
@@ -346,6 +511,10 @@ class GeminiModel(BaseModel):
         if isinstance(self.base_url, str) and ('together' in self.base_url or 'openai' in self.base_url):
             self.base_url = 'https://generativelanguage.googleapis.com'
         self._is_ready = False
+    
+    @property
+    def supports_tool_calling(self) -> bool:
+        return True
     
     def setup(self) -> None:
         """No client object needed; REST via requests."""
@@ -415,6 +584,84 @@ class GeminiModel(BaseModel):
     
     def cleanup(self) -> None:
         self._is_ready = False
+    
+    def generate_with_tools(
+        self,
+        prompt: str,
+        tools: List[Dict[str, Any]],
+        tool_choice: str = "required",
+        temperature: float = 0.7,
+        max_tokens: int = 1024,
+        **kwargs,
+    ) -> Dict[str, Any]:
+        """Generate response with tool calling via Gemini REST API."""
+        if not self._is_ready:
+            self.setup()
+        
+        import requests as req_lib
+        timeout_s = self.config.get('test_settings', {}).get('timeout_seconds', 60)
+        timeout_s = kwargs.pop('timeout', timeout_s)
+        
+        base_url = self.base_url if 'googleapis.com' in self.base_url else 'https://generativelanguage.googleapis.com'
+        url = f"{base_url}/{self.api_version}/models/{self.model_name}:generateContent?key={self.api_key}"
+        
+        # Gemini tool format: convert from OpenAI format
+        function_declarations = []
+        for tool in tools:
+            func = tool.get('function', tool)
+            # Gemini requires uppercase type names
+            params = func.get('parameters', {})
+            gemini_params = {
+                'type': params.get('type', 'OBJECT').upper(),
+                'properties': {},
+                'required': params.get('required', []),
+            }
+            for prop_name, prop_def in params.get('properties', {}).items():
+                gemini_prop = {
+                    'type': prop_def.get('type', 'STRING').upper(),
+                    'description': prop_def.get('description', ''),
+                }
+                if 'enum' in prop_def:
+                    gemini_prop['enum'] = prop_def['enum']
+                gemini_params['properties'][prop_name] = gemini_prop
+            
+            function_declarations.append({
+                'name': func['name'],
+                'description': func.get('description', ''),
+                'parameters': gemini_params,
+            })
+        
+        payload: Dict[str, Any] = {
+            "contents": [{"role": "user", "parts": [{"text": prompt}]}],
+            "tools": [{"functionDeclarations": function_declarations}],
+            "toolConfig": {"functionCallingConfig": {"mode": "ANY"}},
+            "generationConfig": {
+                "temperature": temperature,
+                "maxOutputTokens": max_tokens,
+            },
+        }
+        
+        try:
+            resp = req_lib.post(url, json=payload, headers={"Content-Type": "application/json"}, timeout=timeout_s)
+            resp.raise_for_status()
+            data = resp.json()
+            
+            candidates = data.get("candidates", [])
+            if candidates:
+                content = candidates[0].get("content", {})
+                parts = content.get("parts", [])
+                for part in parts:
+                    if "functionCall" in part:
+                        fc = part["functionCall"]
+                        return {
+                            'tool_name': fc['name'],
+                            'arguments': fc.get('args', {}),
+                        }
+            
+            raise Exception("Model tool call yapmadı. Serbest metin cevabı döndü.")
+            
+        except Exception as e:
+            raise Exception(f"Gemini tool call hatası ({self.model_name}): {str(e)}")
 
 
 class OpenRouterModel(BaseModel):
@@ -431,6 +678,10 @@ class OpenRouterModel(BaseModel):
         
         if not self.api_key:
             raise ValueError("OpenRouter API key not found in config or environment. Set OPENROUTER_API_KEY.")
+    
+    @property
+    def supports_tool_calling(self) -> bool:
+        return True
     
     def setup(self) -> None:
         """Initialize OpenRouter client via OpenAI SDK."""
@@ -477,6 +728,37 @@ class OpenRouterModel(BaseModel):
     def cleanup(self) -> None:
         self.client = None
         self._is_ready = False
+    
+    def generate_with_tools(
+        self,
+        prompt: str,
+        tools: List[Dict[str, Any]],
+        tool_choice: str = "required",
+        temperature: float = 0.7,
+        max_tokens: int = 1024,
+        **kwargs,
+    ) -> Dict[str, Any]:
+        """Generate response with tool calling via OpenRouter API."""
+        if not self._is_ready:
+            self.setup()
+        
+        timeout_s = self.config.get('test_settings', {}).get('timeout_seconds', 60)
+        timeout_s = kwargs.pop('timeout', timeout_s)
+        
+        try:
+            return _openai_tool_call(
+                client=self.client,
+                model_name=self.model_name,
+                prompt=prompt,
+                tools=tools,
+                tool_choice=tool_choice,
+                temperature=temperature,
+                max_tokens=max_tokens,
+                timeout_s=timeout_s,
+                **kwargs,
+            )
+        except Exception as e:
+            raise Exception(f"OpenRouter tool call hatası ({self.model_name}): {str(e)}")
 
 
 class OllamaModel(BaseModel):
@@ -488,6 +770,10 @@ class OllamaModel(BaseModel):
         self.api_key = ol_cfg.get('api_key', 'ollama')  # Ollama doesn't need a real key
         self.base_url = ol_cfg.get('base_url', 'http://localhost:11434/v1')
         self.client = None
+    
+    @property
+    def supports_tool_calling(self) -> bool:
+        return True
     
     def setup(self) -> None:
         """Initialize Ollama client via OpenAI SDK."""
@@ -536,6 +822,43 @@ class OllamaModel(BaseModel):
     def cleanup(self) -> None:
         self.client = None
         self._is_ready = False
+    
+    def generate_with_tools(
+        self,
+        prompt: str,
+        tools: List[Dict[str, Any]],
+        tool_choice: str = "required",
+        temperature: float = 0.7,
+        max_tokens: int = 1024,
+        **kwargs,
+    ) -> Dict[str, Any]:
+        """Generate response with tool calling via Ollama API."""
+        if not self._is_ready:
+            self.setup()
+        
+        timeout_s = self.config.get('test_settings', {}).get('timeout_seconds', 120)
+        timeout_s = kwargs.pop('timeout', timeout_s)
+        
+        try:
+            return _openai_tool_call(
+                client=self.client,
+                model_name=self.model_name,
+                prompt=prompt,
+                tools=tools,
+                tool_choice=tool_choice,
+                temperature=temperature,
+                max_tokens=max_tokens,
+                timeout_s=timeout_s,
+                **kwargs,
+            )
+        except Exception as e:
+            error_msg = str(e)
+            if "connection" in error_msg.lower() or "refused" in error_msg.lower():
+                raise Exception(
+                    f"Ollama'ya bağlanılamadı ({self.base_url}). "
+                    f"Ollama'nın çalıştığından emin olun: 'ollama serve'"
+                )
+            raise Exception(f"Ollama tool call hatası ({self.model_name}): {error_msg}")
 
 
 class LMStudioModel(BaseModel):
@@ -547,6 +870,10 @@ class LMStudioModel(BaseModel):
         self.api_key = lm_cfg.get('api_key', 'lm-studio')  # LM Studio doesn't need a real key
         self.base_url = lm_cfg.get('base_url', 'http://localhost:1234/v1')
         self.client = None
+    
+    @property
+    def supports_tool_calling(self) -> bool:
+        return True
     
     def setup(self) -> None:
         """Initialize LM Studio client via OpenAI SDK."""
@@ -595,3 +922,40 @@ class LMStudioModel(BaseModel):
     def cleanup(self) -> None:
         self.client = None
         self._is_ready = False
+    
+    def generate_with_tools(
+        self,
+        prompt: str,
+        tools: List[Dict[str, Any]],
+        tool_choice: str = "required",
+        temperature: float = 0.7,
+        max_tokens: int = 1024,
+        **kwargs,
+    ) -> Dict[str, Any]:
+        """Generate response with tool calling via LM Studio API."""
+        if not self._is_ready:
+            self.setup()
+        
+        timeout_s = self.config.get('test_settings', {}).get('timeout_seconds', 120)
+        timeout_s = kwargs.pop('timeout', timeout_s)
+        
+        try:
+            return _openai_tool_call(
+                client=self.client,
+                model_name=self.model_name,
+                prompt=prompt,
+                tools=tools,
+                tool_choice=tool_choice,
+                temperature=temperature,
+                max_tokens=max_tokens,
+                timeout_s=timeout_s,
+                **kwargs,
+            )
+        except Exception as e:
+            error_msg = str(e)
+            if "connection" in error_msg.lower() or "refused" in error_msg.lower():
+                raise Exception(
+                    f"LM Studio'ya bağlanılamadı ({self.base_url}). "
+                    f"LM Studio'nun çalıştığından ve Local Server'ın aktif olduğundan emin olun."
+                )
+            raise Exception(f"LM Studio tool call hatası ({self.model_name}): {error_msg}")

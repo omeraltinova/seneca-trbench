@@ -34,6 +34,7 @@ def run_benchmark(
     resume: bool = False,
     judge_provider: Optional[str] = None,
     judge_model: Optional[str] = None,
+    mcq_type: str = 'ai',
 ):
     """
     Run benchmark on specified model.
@@ -46,6 +47,7 @@ def run_benchmark(
         resume: Resume from interrupted test
         judge_provider: Override judge provider from config
         judge_model: Override judge model from config
+        mcq_type: MCQ scoring mode ('ai' for LLM judge, 'tool' for tool-call auto scoring)
     """
     # Load configuration
     console.print("[bold blue]Konfigürasyon yükleniyor...[/bold blue]")
@@ -63,11 +65,13 @@ def run_benchmark(
     
     # Display banner
     judge_info = f"{config['judge'].get('provider', 'openai')}/{config['judge']['model']}"
+    mcq_mode_info = "Tool Call (Otomatik)" if mcq_type == 'tool' else "AI Judge"
     console.print(Panel.fit(
         f"[bold green]TÜRKÇE DİL BENCHMARK SİSTEMİ[/bold green]\n\n"
         f"Provider: {provider}\n"
         f"Model: {model_name}\n"
         f"Test Tipi: {test_type}\n"
+        f"MCQ Puanlama: {mcq_mode_info}\n"
         f"Judge: {judge_info}",
         border_style="green"
     ))
@@ -95,6 +99,15 @@ def run_benchmark(
         
         console.print("[bold green]✓[/bold green] Model hazır\n")
         
+        # Check tool calling support for MCQ tool mode
+        if mcq_type == 'tool' and test_type in ['mcq', 'all']:
+            if not model.supports_tool_calling:
+                raise ValueError(
+                    f"{provider} provider tool calling desteklemiyor. "
+                    f"--mcq-type ai kullanın veya tool calling destekleyen bir provider seçin."
+                )
+            console.print("[bold green]✓[/bold green] Tool calling desteği doğrulandı\n")
+        
         # Determine which tests to run
         tests_to_run = []
         if test_type in ['mcq', 'all']:
@@ -111,7 +124,7 @@ def run_benchmark(
             console.print(f"[bold cyan]{'='*80}[/bold cyan]\n")
             
             # Create evaluator
-            evaluator = Evaluator(config, model, logger)
+            evaluator = Evaluator(config, model, logger, mcq_type=mcq_type)
             
             # Run test
             try:
@@ -124,9 +137,12 @@ def run_benchmark(
             console.print(f"\n[bold green]✓[/bold green] Test tamamlandı: {len(results)} soru\n")
             
             # Score results
-            judge_display = f"{config['judge'].get('provider', 'openai')}/{config['judge']['model']}"
-            console.print(f"[bold yellow]Puanlama yapılıyor ({judge_display} ile)...[/bold yellow]\n")
-            judge = Judge(config, logger)
+            if current_test == 'mcq' and mcq_type == 'tool':
+                console.print("[bold yellow]Puanlama yapılıyor (Otomatik tool-call doğrulama)...[/bold yellow]\n")
+            else:
+                judge_display = f"{config['judge'].get('provider', 'openai')}/{config['judge']['model']}"
+                console.print(f"[bold yellow]Puanlama yapılıyor ({judge_display} ile)...[/bold yellow]\n")
+            judge = Judge(config, logger, mcq_type=mcq_type)
             scored_results = judge.score_results(results, current_test)
             judge.cleanup()
             
@@ -150,10 +166,13 @@ def run_benchmark(
         model.cleanup()
         
         # Final summary
+        judge_display = f"{config['judge'].get('provider', 'openai')}/{config['judge']['model']}"
+        mcq_summary = f"\nMCQ Puanlama: {mcq_mode_info}" if test_type in ['mcq', 'all'] else ""
         console.print(Panel.fit(
             "[bold green]BENCHMARK BAŞARIYLA TAMAMLANDI[/bold green]\n\n"
             f"Test Edilen Model: {model_name}\n"
-            f"Judge Model: {judge_display}\n"
+            f"Judge Model: {judge_display}"
+            f"{mcq_summary}\n"
             f"Tamamlanan Testler: {', '.join(tests_to_run)}\n"
             f"Sonuçlar: {config['paths']['results_dir']}",
             border_style="green"
@@ -200,6 +219,12 @@ def main():
   
   # Judge olarak OpenRouter kullan
   python benchmark.py --provider ollama --model llama3 --judge-provider openrouter --judge-model openai/gpt-4o
+  
+  # MCQ testini tool-call modu ile çalıştır (AI judge yerine otomatik doğrulama)
+  python benchmark.py --provider openai --model gpt-4o --test-type mcq --mcq-type tool
+  
+  # Tüm testler, MCQ'da tool-call ile otomatik puanlama
+  python benchmark.py --provider anthropic --model claude-sonnet-4-20250514 --test-type all --mcq-type tool
         """
     )
     
@@ -255,6 +280,14 @@ def main():
         help='Judge (puanlama) modeli adı (config.yaml\'daki varsayılanı geçersiz kılar)'
     )
     
+    parser.add_argument(
+        '--mcq-type',
+        type=str,
+        default='ai',
+        choices=['ai', 'tool'],
+        help='MCQ puanlama yöntemi: ai (LLM judge, varsayılan) veya tool (tool-call ile otomatik doğrulama)'
+    )
+    
     args = parser.parse_args()
     
     # Run benchmark
@@ -266,6 +299,7 @@ def main():
         resume=args.resume,
         judge_provider=args.judge_provider,
         judge_model=args.judge_model,
+        mcq_type=args.mcq_type,
     )
 
 
