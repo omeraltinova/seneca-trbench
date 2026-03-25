@@ -209,7 +209,7 @@ Cevap:"""
                         tools=MCQ_TOOL_DEFINITION,
                         tool_choice="required",
                         temperature=0.3,
-                        max_tokens=1024,
+                        max_tokens=10240,
                         timeout=self.config.get('test_settings', {}).get('timeout_seconds', 60),
                     )
                     model_answer = tool_result['arguments'].get('answer', '')

@@ -323,6 +323,7 @@ class Reporter:
                     'test_type': test_type,
                     'timestamp': datetime.now().isoformat(),
                     'total_questions': len(results),
+                    'judge_provider': self.config.get('judge', {}).get('provider', 'unknown'),
                     'judge_model': self.config.get('judge', {}).get('model', 'unknown'),
                     'overall_score': stats.get('overall_score', 0),
                     'grade': stats.get('grade', 'N/A'),
@@ -397,4 +398,3 @@ class Reporter:
             'statistics': stats,
             'report_paths': report_paths
         }
-

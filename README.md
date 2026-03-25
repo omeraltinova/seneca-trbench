@@ -321,6 +321,12 @@ python3 compare_results.py
 
 # Belirli dosyaları karşılaştır
 python3 compare_results.py results/gpt-3.5_mcq_*.json results/gpt-4_mcq_*.json
+
+# Aynı judge provider + judge model ile puanlanan modeller için grafikler
+python3 tools/plot_scores.py --mode judge --judge-provider openrouter --judge-model openai/gpt-5-mini --test-type mcq
+
+# Auto tool-call ile tamamlanan MCQ koşuları için grafikler
+python3 tools/plot_scores.py --mode tool --test-type mcq
 ```
 
 **Özellikler**:
@@ -402,6 +408,7 @@ Turkish-Benchmark/
 │   ├── model_registry.py        # Model kayıtları
 │   ├── rescore.py               # Yeniden puanlama
 │   ├── compare_results.py       # Sonuç karşılaştırma
+│   ├── plot_scores.py           # Puan grafikleri (tekil + toplu)
 │   ├── analyze_saq.py           # SAQ analiz
 │   └── full_analysis.py         # Genel analiz
 │
@@ -427,6 +434,7 @@ Turkish-Benchmark/
 | `examples/run_claude_comparison.py` | Claude karşılaştırma | 25 dk    |
 | `examples/run_gpt5_comparison.py`   | GPT-5 karşılaştırma  | 20 dk    |
 | `tools/compare_results.py`          | Sonuç karşılaştırma  | Hızlı    |
+| `tools/plot_scores.py`              | Puan görselleştirme  | Hızlı    |
 | `tools/model_registry.py`           | Model kayıtları      | Hızlı    |
 | `tools/analyze_saq.py`              | SAQ detaylı analiz   | Hızlı    |
 | `tools/rescore.py`                  | Yeniden puanlama     | 2-5 dk   |
